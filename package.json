@@ -2,10 +2,9 @@
   "name": "watchtowerarchive",
   "version": "0.0.1",
   "description": "website to view old publications form the Watchtower Bible and Tract Society",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "node index.js",
-    "start": "node index.js"
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,11 @@
   },
   "homepage": "https://github.com/cmdPromptCritical/wtDatabase#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "hbs": "~4.0.1",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0"
   }
 }
