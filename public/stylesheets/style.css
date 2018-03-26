@@ -1,6 +1,8 @@
 #main {
   padding: 3rem;
   font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  max-width: 1200px;
+  margin: auto;
 }
 #searchbox {
 	padding: 0 3rem 0 3rem;
