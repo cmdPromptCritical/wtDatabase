@@ -1,8 +1,17 @@
 #main {
-  padding: 55px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 3rem;
+  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+#searchbox {
+	padding: 0 3rem 0 3rem;
+	margin:auto;
 }
 
+.img-search {
+	padding: 0 0 3px 0;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
