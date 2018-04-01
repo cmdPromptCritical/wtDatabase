@@ -3,7 +3,7 @@
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-   hosts: [ '192.168.2.32:9200']
+   hosts: [ 'http://onkalo.ddns.net:9200']
 });
 client.ping({
   requestTimeout: 5000,
