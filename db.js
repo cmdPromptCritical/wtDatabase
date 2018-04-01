@@ -6,7 +6,7 @@ var client = new elasticsearch.Client({
    hosts: [ 'http://onkalo.ddns.net:9200']
 });
 client.ping({
-  requestTimeout: 5000,
+  requestTimeout: 15000,
 }, function (error) {
   if (error) {
     console.error('elasticsearch cluster is down!');
