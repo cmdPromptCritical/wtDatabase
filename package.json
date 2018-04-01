@@ -4,7 +4,7 @@
   "description": "website to view old publications form the Watchtower Bible and Tract Society",
   "private": true,
   "scripts": {
-    "start": "node db.js"
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
