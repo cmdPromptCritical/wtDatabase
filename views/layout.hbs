@@ -24,14 +24,16 @@
   <body>
 	<div class="row">
 	  <div class="col-lg-6" id="searchbox">
-		<div class="input-group">
-		  <input type="text" class="form-control" placeholder="Search">
-		  <span class="input-group-btn">
-			<button class="btn btn-primary" type="button">
-				<img class="img-search" src='images/search.svg'></img>
-			</button>
-		  </span>
-		</div><!-- /input-group -->
+      <form method='post' action='/search'>
+    		<div class="input-group">
+    		  <input type="text" class="form-control" placeholder="Search" name='searchString'>
+    		  <span class="input-group-btn">
+    			<button class="btn btn-primary" type="submit">
+    				<img class="img-search" src='images/search.svg'></img>
+    			</button>
+    		  </span>
+    		</div><!-- /input-group -->
+      </form>
 	  </div><!-- /.col-lg-6 -->
 	</div><!-- /.row -->
     <div id='main'>
