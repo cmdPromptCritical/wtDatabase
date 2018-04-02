@@ -14,3 +14,5 @@ client.ping({
     console.log('ElasticSearch connected');
   }
 });
+
+module.exports = client;
