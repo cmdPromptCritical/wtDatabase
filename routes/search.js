@@ -9,16 +9,31 @@ router.get('/', function(req, res, next) {
 
 /* POST the content from the form and do something with it. */
 router.post('/', function(req, res) {
-  let query = "SELECT COUNT('ayyy') from wt_docs WHERE bodytxt LIKE '\%" + req.body.searchString + "\%' LIMIT 100;"
-
+  let query = "select cat1, cat2, pg, ts_headline(bodytxt, to_tsquery('" + req.body.searchString + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ to_tsquery('" + req.body.searchString + "') LIMIT 20;"
+  let queryRes = [];
   console.log('query is: ' + query)
 
-  db.query(query, (err, res) => {
-    console.log(res)
-    if (err) {
-      console.log('something went wrong when querying the db')
-    }
+  let searchdb = new Promise(function(resolve, reject) {
+    db.query(query, (err, res) => {
+      //console.log(res)
+      if (err) {
+        console.log('something went wrong when querying the db')
+      }
+      if (res.rows[0]) {
+        res.rows.forEach(row => {
+          console.log(row.ts_headline)
+          queryRes.push(row.ts_headline)
+        });
+      console.log(typeof queryRes)
+      console.log(queryRes)
+      }
+      resolve()
+    })
   })
+    searchdb.then(() => {
+      res.render('search', { title: 'Search' , searchResult: queryRes});
+
+    })
 
   // db.index({
   //   index: 'searches',
@@ -30,7 +45,6 @@ router.post('/', function(req, res) {
   //   console.log('elk error: ' + err);
   //   console.log('elk res: ' + res);
   // });
-  res.render('search', { title: 'Search' });
 });
 
 module.exports = router;
