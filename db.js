@@ -25,7 +25,7 @@ var pool = null;
 try {
   pool = new Pool({
     user: 'wtdb',
-    host: '74.14.8.225', //'192.168.2.11''74.14.8.225',
+    host: '192.168.2.11', //'74.14.8.225',
     database: 'wtdb',
     password: 'asdf',
     port: 5432, //stock option was 3211

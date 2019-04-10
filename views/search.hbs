@@ -1,9 +1,10 @@
-<h1>{{title}}</h1>
-<p>General Inquiries? Inaccurate information? Shoot me a private message with
-the fields below.</p>
-<p>Hello, Luke</p>
-<h2>Search Results</h2>>
-{{#each searchResult}}
-  <li>... {{ this }} ...</li>
-{{/each}}
+<h2>{{title}}</h2>
+<div class="searchResultsContainer col-xs-12 col-sm-12 col-md-7 excerpet">
+  {{#each searchResult}}
+    <div class="srItem">
+      <h4>{{this.cat1}} -> {{this.cat2}} -> {{this.cat3}} -> pg{{this.pg}} </h4>
+      ... {{this.ts_headline}} ...
+    </div>
+  {{/each}}
+</div>
 
