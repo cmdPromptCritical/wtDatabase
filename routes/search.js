@@ -8,35 +8,30 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST the content from the form and do something with it. */
-router.post('/', function(req, res) {
-  let query = "select cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, to_tsquery('" + req.body.searchString + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ to_tsquery('" + req.body.searchString + "') LIMIT 20;"
+router.post('/', (req, res) => {
+  let query = "select cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + req.body.searchString + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + req.body.searchString + "') LIMIT 20;"
   let queryRes;
   console.log('query is: ' + query)
 
-  let searchdb = new Promise(function(resolve, reject) {
+  let searchdb = new Promise((resolve, reject) => {
     db.query(query, (err, res) => {
       //console.log(res)
       if (err) {
-        console.log('something went wrong when searching through the db')
+        console.log('no search results, or something went wrong when searching through the db')
+        reject()
+      } else {
+          queryRes = res.rows
+  
+          console.log(queryRes)
+        resolve()
       }
-      if (res.rows[0]) {
-        //res.rows.forEach(row => {
-          //console.log(row.ts_headline)
-          //console.log(row.cat1, '->', row.cat2,'->', row.pg)
-          //queryRes.push(row.ts_headline)
-        //});
-        queryRes = res.rows
-
-      console.log(typeof queryRes)
-      console.log(queryRes)
-      }
-      resolve()
     });
   })
-
   searchdb.then(() => {
     res.render('search', { title: 'Search Results for "' + req.body.searchString + '"' , searchResult: queryRes});
 
+  }).catch( () => {
+    res.render('search', { title: 'Search Results for "' + req.body.searchString + '"'});
   })
 
   // db.index({

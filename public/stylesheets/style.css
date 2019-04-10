@@ -25,3 +25,10 @@
   text-decoration: none;
 
 }
+
+.searchResultsContainer h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-bottom: 5px !important; }
+.searchResultsContainer h3 > a, .search-result i { color: #248dc1 !important; }
+
+b {
+  font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif
+}
