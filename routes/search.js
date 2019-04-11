@@ -1,20 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+let queryRes;
 
-/* GET search page. */
-router.get('/', function(req, res, next) {
-  res.render('search', { title: 'Search' });
-});
-
-/* POST the content from the form and do something with it. */
-router.post('/', (req, res) => {
-  let query = "select cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + req.body.searchString + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + req.body.searchString + "') LIMIT 20;"
-  let queryRes;
-  console.log('query is: ' + query)
-
+function queryTxt(query, res) {
+  let queryStr = "select cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + query + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + query + "') LIMIT 20;"
   let searchdb = new Promise((resolve, reject) => {
-    db.query(query, (err, res) => {
+    db.query(queryStr, (err, res) => {
       //console.log(res)
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
@@ -28,12 +20,25 @@ router.post('/', (req, res) => {
     });
   })
   searchdb.then(() => {
-    res.render('search', { title: 'Search Results for "' + req.body.searchString + '"' , searchResult: queryRes});
-
+    res.render('search', { title: 'Search Results for "' + query + '"' , searchResult: queryRes});
+  
   }).catch( () => {
-    res.render('search', { title: 'Search Results for "' + req.body.searchString + '"'});
+    res.render('search', { title: 'Search Results for "' + query + '"'});
   })
+};
 
+/* GET search page. */
+router.get('/', (req, res, next) => {
+  console.log(req.query.q)
+  let searchdb = queryTxt(req.query.q, res)
+
+});
+
+/* POST the content from the form and do something with it. */
+router.post('/', (req, res) => {
+  queryTxt(req.body.searchString, res)
+  
+  
   // db.index({
   //   index: 'searches',
   //   type: '_doc',
