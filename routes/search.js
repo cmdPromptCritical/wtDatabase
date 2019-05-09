@@ -9,6 +9,8 @@ function queryTxt(query, res) {
     db.query(queryStr, (err, res) => {
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
+        console.log('error: ', err)
+        console.log('query: ', queryStr)
         reject()
       } else {
           queryRes = res.rows

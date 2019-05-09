@@ -1,12 +1,19 @@
-#main {
-  padding: 3rem;
+@media (min-width: 568px) {
+  #main {
   font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
-  max-width: 1200px;
+  /*padding: 3rem;
+  max-width: 1200px; */
   margin: auto;
+  }
 }
 #searchbox {
 	padding: 0.75rem 3rem 0 3rem;
-	margin:auto;
+  margin:auto;
+}
+
+#searchSettings {
+  fill: white !important;
+  stroke: white !important;
 }
 
 .img-search {
@@ -26,9 +33,21 @@
 
 }
 
-.searchResultsContainer h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-bottom: 5px !important; }
-.searchResultsContainer h3 > a, .search-result i { color: #248dc1 !important; }
+.searchResultsContainer h3 { 
+  font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; 
+  margin-bottom: 5px !important; 
+}
+
+.searchResultsContainer h3 > a, .search-result i { 
+  color: #248dc1 !important; 
+}
 
 b {
   font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif
+}
+
+@media (max-width: 568px) {
+  #sidebar {
+    /*display: none;*/
+  }
 }
