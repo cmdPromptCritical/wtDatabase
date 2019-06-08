@@ -12,7 +12,44 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    jQuery(function ($) {
+
+        $(".sidebar-dropdown > a").click(function() {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+          .parent()
+          .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
+
+    $("#close-sidebar").click(function() {
+      $(".page-wrapper").removeClass("toggled");
+    });
+    $("#show-sidebar").click(function() {
+      $(".page-wrapper").addClass("toggled");
+    });
+
+
+      
+      
+    });
+  </script>  
     <!-- <h5 class="my-0 mr-md-auto font-weight-bold logo navbar-brand" style=""> <a class='title' href="/">Watchtower Archive</a></h5> -->
     <nav class="navbar navbar-expand-md navbar-light sticky-top bg-white border-bottom box-shadow "> <!-- original tags: navbar my-2 my-md-0 mr-md-3 -->
     <div class="container-fluid">
@@ -41,36 +78,34 @@
 </header>
 
 <body>
-<div class="row welcome text-center">
-  <div class="col-lg-6" id="searchbox">
-    <form method='get' action='/search'>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" name='q'>
-        <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit">
-          <img class="img-search" src='images/search.svg'></img>
-        </button>
-        </span>
-        <button class="btn btn-secondary" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          <img class="img-search" id="searchSettings" src='images/gear.svg'></img>
-        </button>
-      </div><!-- /input-group -->
-    </form>
-    <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-      </div>
-    </div>
-  </div><!-- /.col-lg-6 -->
-</div><!-- /.row -->
-  <div class=""> <!-- /.if things go bad, delete everything but id=sidebar -->
-    <div class="row">
-      <div class="col-12 col-md-3 col-xl-2 flex-xl-nowrap " id="sidebar">
-        <p>yooooooooooo</p>
-      </div>
-      <div class="col-12 col-md-9 col-xl-10" id='main'>
-        {{{body}}}
-      </div>
+
+  <div class="row welcome text-center">
+    <div class="col-lg-6" id="searchbox">
+      <form method='get' action='/search'>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" name='q'>
+          <span class="input-group-btn">
+          <button class="btn btn-primary" type="submit">
+            <img class="img-search" src='images/search.svg'></img>
+          </button>
+          </span>
+          <button class="btn btn-secondary" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <img class="img-search" id="searchSettings" src='images/gear.svg'></img>
+          </button>
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <i class="fas fa-align-left"></i>
+          <span>Toggle Sidebar</span>
+      </button>
+        </div><!-- /input-group -->
+      </form>
+      
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+
+  <div class="wrapper">
+    
+    <div class="col-12 col-md-9 col-xl-10" id='body'>
+      {{{body}}}
     </div>
   </div>
 </body>

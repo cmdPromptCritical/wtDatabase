@@ -4,7 +4,7 @@ var db = require('../db');
 let queryRes;
 
 function queryTxt(query, res) {
-  let queryStr = "select cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + query + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + query + "') LIMIT 20;"
+  let queryStr = "select generate_series(1,10000000) AS n, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + query + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + query + "') LIMIT 20;"
   let searchdb = new Promise((resolve, reject) => {
     db.query(queryStr, (err, res) => {
       if (err) {
