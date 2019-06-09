@@ -2,8 +2,24 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 let queryRes;
+function generatePgNumArr(pgNum){
+  var pgArr;
+  console.log(typeof pgNum)
+  switch (pgNum) {
+    case 1:
+      pgArr = [1, 2, 3, 4, 5]
+      break;
+    case 2:
+      pgArr = [1, 2, 3, 4, 5]
+      break;
+    default:
+      pgArr = [pgNum - 2, pgNum - 1, pgNum, pgNum + 1, pgNum + 2]
+      break;
+  };
+  return pgArr
+};
 
-function queryTxt(query, res, pgNum = 0) {
+function queryTxt(query, res, pgNum = 1) {
   let queryStr = "select generate_series(1,10000000) AS n, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + query + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + query + "') LIMIT 20;"
   let searchdb = new Promise((resolve, reject) => {
     db.query(queryStr, (err, res) => {
@@ -21,7 +37,8 @@ function queryTxt(query, res, pgNum = 0) {
     });
   })
   searchdb.then(() => {
-    res.render('search', { title: 'Search Results for "' + query + '"' , searchResult: queryRes, pgNum: pgNum});
+    let pgNumArr = generatePgNumArr(pgNum)
+    res.render('search', { title: 'Search Results for "' + query + '"' , searchResult: queryRes, pgNum: pgNum, pgNumArr: pgNumArr});
   
   }).catch( () => {
     res.render('search', { title: 'Search Results for "' + query + '"'});
@@ -30,13 +47,11 @@ function queryTxt(query, res, pgNum = 0) {
 
 /* GET search page. */
 router.get('/', (req, res, next) => {
-  let queryTxt = req.query.q
-  let pgNum = req.query.p
-
-  console.log(queryTxt)
+  let q = req.query.q
+  let pgNum = parseInt(req.query.p, 10)
+  console.log(q)
   console.log(pgNum)
-  
-  let searchdb = queryTxt(queryTxt, res, pgNum)
+  let searchdb = queryTxt(q, res, pgNum)
 
 });
 
