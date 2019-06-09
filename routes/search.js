@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 let queryRes;
-function generatePgNumArr(pgNum){
+
+function genPgNumArr(pgNum){
   var pgArr;
   console.log(typeof pgNum)
   switch (pgNum) {
@@ -37,7 +38,7 @@ function queryTxt(query, res, pgNum = 1) {
     });
   })
   searchdb.then(() => {
-    let pgNumArr = generatePgNumArr(pgNum)
+    let pgNumArr = genPgNumArr(pgNum)
     res.render('search', { title: 'Search Results for "' + query + '"' , searchResult: queryRes, pgNum: pgNum, pgNumArr: pgNumArr});
   
   }).catch( () => {
