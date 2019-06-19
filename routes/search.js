@@ -5,7 +5,7 @@ let queryRes;
 
 function genPgNumArr(pgNum){
   var pgArr;
-  console.log(typeof pgNum)
+  if (Number.isNaN(pgNum)) pgNum = 1;
   switch (pgNum) {
     case 1:
       pgArr = [1, 2, 3, 4, 5]
@@ -39,7 +39,15 @@ function queryTxt(query, res, pgNum = 1) {
   })
   searchdb.then(() => {
     let pgNumArr = genPgNumArr(pgNum)
-    res.render('search', { title: 'Search Results for "' + query + '"' , searchResult: queryRes, pgNum: pgNum, pgNumArr: pgNumArr});
+    let currentPage = pgNum
+    console.log(queryRes)
+    res.render('search', { 
+      title: query , 
+      searchResult: queryRes, 
+      pgNum: pgNum, 
+      pgNumArr: pgNumArr, 
+      pagination: { page: 3, limit:10, totalRows: 5 }
+    });
   
   }).catch( () => {
     res.render('search', { title: 'Search Results for "' + query + '"'});
@@ -51,7 +59,6 @@ router.get('/', (req, res, next) => {
   let q = req.query.q
   let pgNum = parseInt(req.query.p, 10)
   console.log(q)
-  console.log(pgNum)
   let searchdb = queryTxt(q, res, pgNum)
 
 });

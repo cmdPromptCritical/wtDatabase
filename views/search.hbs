@@ -1,4 +1,4 @@
-<h2>{{title}}</h2>
+<h2>Search Results for "{{title}}"</h2>
 <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpet">
   {{#if searchResult}}
     {{#each searchResult}}
@@ -13,11 +13,41 @@
 </div>
 {{#if searchResult}}
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="&p={{pgNumArr.[1]}}">Previous</a></li>
     {{#each pgNumArr}}
-    <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
+    <li class="page-item" id="pg{{this}}"><a class="page-link" href="&p={{this}}">{{this}}</a></li>
     {{/each}}
-    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    <li class="page-item"><a class="page-link" href="&p={{pgNumArr.[3]}}">Next</a></li>
   </ul>
 {{/if}}
+
+<script>
+  //fixes links inside search results, particularly the ones in the
+  //pagination bar at the bottom
+  function fixsrLinks(){
+    var x = document.querySelectorAll('.pagination .page-link');
+    var query = location.search.split('q=')[1]
+    Array.from(x).forEach((el) => {
+      // Do stuff here
+      var tempstr = el.href 
+      tempstr = tempstr.replace(/3000\//gi,'3000/search?q=' + query)
+      el.href = tempstr
+      console.log(el.href);
+    });
+  }
+  // this sets active page number inside search resutls paginator
+  function setActivePg() {
+    // grabs page nunber, preprocesses it
+    var pgNumber = location.search.split('p=')[1]
+    if (pgNumber == null) pgNumber = 1
+
+    // sets page number in pagnated search result to 'active'
+    var el = document.getElementById("pg" + pgNumber);
+    el.className += " active";
+
+  }
+
+  document.addEventListener('DOMContentLoaded', setActivePg(), false);
+  document.addEventListener('DOMContentLoaded', fixsrLinks(), false);
+
+</script>

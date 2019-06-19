@@ -3,20 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var db = require('./db');
-
+const exphbs = require('express-handlebars');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var aboutRouter = require('./routes/about');
 var contactRouter = require('./routes/contact');
 var searchRouter = require('./routes/search');
-
+var handlebars = require('handlebars')
+var helpers = require('handlebars-form-helpers').register(handlebars);
 var app = express();
 
 // view engine setup
+var hbs = exphbs.create({
+  helpers: {    foo: function() { return 'foo.';}},  //require('./handlers/handlebars'), 
+  defaultLayout: 'main', 
+  extname: '.hbs'
+});
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
+app.engine('handlebars', hbs.engine)
+app.set('view engine', '.hbs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
