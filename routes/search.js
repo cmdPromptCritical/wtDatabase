@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../db');
 let queryRes;
 
-function genPgNumArr(pgNum){
+function genPgNumArr(pgNum, pgLimit = 10){
   var pgArr;
   if (Number.isNaN(pgNum)) pgNum = 1;
   switch (pgNum) {
@@ -16,6 +16,10 @@ function genPgNumArr(pgNum){
     default:
       pgArr = [pgNum - 2, pgNum - 1, pgNum, pgNum + 1, pgNum + 2]
       break;
+  };
+  // tests to see if pgLimit is exceeded
+  if (pgArr[4] > 10) {
+    pgArr = [6, 7, 8, 9, 10]
   };
   return pgArr
 };

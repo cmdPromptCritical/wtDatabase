@@ -13,27 +13,34 @@
 </div>
 {{#if searchResult}}
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="&p={{pgNumArr.[1]}}">Previous</a></li>
+    <li class="page-item"><a class="page-link" id="pgPrev" href="&p={{pgNumArr.[1]}}">Previous</a></li>
     {{#each pgNumArr}}
     <li class="page-item" id="pg{{this}}"><a class="page-link" href="&p={{this}}">{{this}}</a></li>
     {{/each}}
-    <li class="page-item"><a class="page-link" href="&p={{pgNumArr.[3]}}">Next</a></li>
+    <li class="page-item"><a class="page-link" id="pgNext" href="&p={{pgNumArr.[3]}}">Next</a></li>
   </ul>
 {{/if}}
 
 <script>
   //fixes links inside search results, particularly the ones in the
-  //pagination bar at the bottom
+  //pagination bar at the bottom by adding search results attribute
   function fixsrLinks(){
     var x = document.querySelectorAll('.pagination .page-link');
     var query = location.search.split('q=')[1]
+    query = query.split('&')[0]
     Array.from(x).forEach((el) => {
       // Do stuff here
       var tempstr = el.href 
+      console.log('before:', el.href);
       tempstr = tempstr.replace(/3000\//gi,'3000/search?q=' + query)
+      console.log('query: ', query);
       el.href = tempstr
-      console.log(el.href);
+      console.log('after: ', el.href);
     });
+
+    //TODO:
+    // delete prev/next buttons when at end of results
+    // change prev/next url when nearing end of results
   }
   // this sets active page number inside search resutls paginator
   function setActivePg() {
