@@ -13,11 +13,11 @@
 </div>
 {{#if searchResult}}
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" id="pgPrev" href="&p={{pgNumArr.[1]}}">Previous</a></li>
-    {{#each pgNumArr}}
+    <li class="page-item"><a class="page-link" id="pgPrev" href="&p={{pagination.pgPrev}}">Previous</a></li>
+    {{#each pagination.pgArr}}
     <li class="page-item" id="pg{{this}}"><a class="page-link" href="&p={{this}}">{{this}}</a></li>
     {{/each}}
-    <li class="page-item"><a class="page-link" id="pgNext" href="&p={{pgNumArr.[3]}}">Next</a></li>
+    <li class="page-item"><a class="page-link" id="pgNext" href="&p={{pagination.pgNext}}">Next</a></li>
   </ul>
 {{/if}}
 
@@ -40,7 +40,6 @@
 
     //TODO:
     // delete prev/next buttons when at end of results
-    // change prev/next url when nearing end of results
   }
   // this sets active page number inside search resutls paginator
   function setActivePg() {

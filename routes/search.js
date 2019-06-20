@@ -3,8 +3,10 @@ var router = express.Router();
 var db = require('../db');
 let queryRes;
 
-function genPgNumArr(pgNum, pgLimit = 10){
+function genPgNums(pgNum, pgLimit = 10){
   var pgArr;
+  var pgPrev;
+  var pgNext;
   if (Number.isNaN(pgNum)) pgNum = 1;
   switch (pgNum) {
     case 1:
@@ -18,10 +20,22 @@ function genPgNumArr(pgNum, pgLimit = 10){
       break;
   };
   // tests to see if pgLimit is exceeded
-  if (pgArr[4] > 10) {
-    pgArr = [6, 7, 8, 9, 10]
+  if (pgArr[4] > pgLimit) {
+    pgArr = [pgLimit - 4, pgLimit - 3, pgLimit - 2, pgLimit - 1, pgLimit]
   };
-  return pgArr
+
+  // pgNum - 1, unless you're already at one
+  if (pgNum > 1) pgPrev = pgNum - 1;
+  if (pgNum <= 1) pgPrev = 1;
+
+  // pgNum + 1, unless you're at max
+  if (pgNum == pgLimit) pgNext = pgNum;
+  if (pgNum != pgLimit) pgNext = pgNum + 1;
+  return {
+    pgArr: pgArr, 
+    pgPrev: pgPrev, 
+    pgNext: pgNext
+  };
 };
 
 function queryTxt(query, res, pgNum = 1) {
@@ -42,15 +56,12 @@ function queryTxt(query, res, pgNum = 1) {
     });
   })
   searchdb.then(() => {
-    let pgNumArr = genPgNumArr(pgNum)
-    let currentPage = pgNum
-    console.log(queryRes)
+    let pgNums = genPgNums(pgNum)
+    console.log(pgNums)
     res.render('search', { 
       title: query , 
       searchResult: queryRes, 
-      pgNum: pgNum, 
-      pgNumArr: pgNumArr, 
-      pagination: { page: 3, limit:10, totalRows: 5 }
+      pagination: { pgArr: pgNums.pgArr, page: pgNum, pgPrev: pgNums.pgPrev, pgNext: pgNums.pgNext,  limit:10, totalRows: 5 }
     });
   
   }).catch( () => {
