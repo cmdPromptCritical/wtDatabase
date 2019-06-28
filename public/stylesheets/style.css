@@ -14,12 +14,21 @@
 #searchSettings {
   fill: white !important;
   stroke: white !important;
+  background-image: url(/images/gear.svg);
+  display: inline-block;
+  width: 14px;
+  height: 16px;
 }
 
 .img-search {
-	padding: 0 0 3px 0;
+  fill: white !important;
+  stroke: white !important;
     -webkit-filter: invert(100%);
     filter: invert(100%);
+  background-image: url(/images/search.svg);
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
