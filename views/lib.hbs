@@ -1,11 +1,26 @@
-{{#if searchResult}}
-    {{#each searchResult}}
-        <h1>{{this.cat1}} -> {{this.cat2}} -> {{this.cat3}} -> pg{{this.pg}}</h1>
-        <div class="srItem w-100">
-        <h3>{{title}}</h3>
-        </div>
-        {{{this.bodyhtml}}}
-    {{/each}}
-{{else}}
-No results :c
+<h1>{{searchResult.0.cat1}} -> {{searchResult.0.cat2}} -> {{searchResult.0.cat3}} -> pg{{searchResult.0.pg}}</h1>
+<div class="srItem w-100">
+</div>
+{{#if searchResult.0.bodytxt}}
+    {{{searchResult.0.bodytxt}}}
 {{/if}}
+{{#if searchResult.0.bodyhtml}}
+    {{{searchResult.0.bodyhtml}}}
+{{/if}}
+{{#if searchResult.0.bodypdf}}
+    {{{searchResult.0.bodypdf}}}
+{{/if}}
+<p>{{urlSettings}}</p>
+<div class="settings">
+    <div class="btn-group">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Layout
+        </button>
+        <div class="dropdown-menu">
+            <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
+            <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
+            <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
+            <button class="dropdown-item" type="button" onclick="location.href='/pub/1879-Watchtower_07_July_pg003.pdf'">2 Columns</button>
+        </div>
+</div>
+</div>

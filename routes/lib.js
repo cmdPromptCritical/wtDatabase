@@ -11,7 +11,7 @@ function constructDocQuery(params) {
       if (isNaN(params[key].slice(1))) {
         //do nothing
       } else {
-        // be suuuuper sure we've got the right parameter
+        // be suuuuper sure we've got the right parameter that is, the pgNumber
         if (isNaN(params[key])) {
           // make undefined and moves value to pg param
           pgNum = parseInt(params[key].slice(1));
@@ -31,8 +31,23 @@ function constructDocQuery(params) {
   let q =  cat1 + cat2 + cat3 + cat4 + pgNum;
   return [q, params];
 };
-function getDoc(query, res, params = undefined) {
-  let queryStr = "select cat1, cat2, cat3, cat4, pg, bodyHTML from wt_docs WHERE " + query + " LIMIT 1;"
+function getDoc(query, reqQuery, res, params = undefined) {
+  if (typeof reqQuery.v != 'undefined') {
+    console.log('reqQuery: ', reqQuery.v)
+    if (reqQuery.v == 'html') {
+      var docType = 'bodyhtml';
+    }
+    if (reqQuery.v == 'txt') {
+      var docType = 'bodytxt';
+    }
+    if (reqQuery.v == 'pdf') {
+      var docType = 'bodypdf';
+    }
+    
+  } else {
+    var docType = 'bodyhtml';
+  }
+  let queryStr = "select cat1, cat2, cat3, cat4, pg, " + docType + " from wt_docs WHERE " + query + " LIMIT 1;"
   let searchdb = new Promise((resolve, reject) => {
     db.query(queryStr, (err, res) => {
       if (err) {
@@ -52,6 +67,7 @@ function getDoc(query, res, params = undefined) {
     res.render('lib', { 
       title: query , 
       searchResult: queryRes,
+      urlSettings: docType
     });
     console.log('ho', queryRes)
   
@@ -131,12 +147,13 @@ function prevNextUrls(params) {
 router.get('/:cat1?/:cat2?/:cat3?/:cat4/:pg?', function(req, res, next) {
   // grab document info
   console.log(req.params)
+    
 
   //send info to document query constructor
   let [q, params] = constructDocQuery(req.params)
 
   //query the db, return document + metadata
-  let doc = getDoc(q, res)
+  let doc = getDoc(q, req.query, res)
   
   //generate url for next page and prev page (if prev page exists)
   let [prevURL, nextURL] = prevNextUrls(params)
