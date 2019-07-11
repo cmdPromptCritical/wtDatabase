@@ -7,7 +7,6 @@
   }
 }
 #searchbox {
-	padding: 0.75rem 3rem 0 3rem;
   margin:auto;
 }
 
@@ -30,6 +29,7 @@
   height: 16px;
   display: inline-block;
 }
+
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
@@ -53,137 +53,4 @@
 
 b {
   font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif
-}
-
-#sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  /* top layer */
-  z-index: 9999;
-}
-
-.overlay {
-  display: none;
-  position: fixed;
-  /* full screen */
-  width: 100vw;
-  height: 100vh;
-  /* transparent black */
-  background: rgba(0, 0, 0, 0.7);
-  /* middle layer, i.e. appears below the sidebar */
-  z-index: 998;
-  opacity: 0;
-  /* animate the transition */
-  transition: all 0.5s ease-in-out;
-}
-/* display .overlay when it has the .active class */
-.overlay.active {
-  display: block;
-  opacity: 1;
-}
-
-#dismiss {
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  /* top right corner of the sidebar */
-  top: 10px;
-  right: 10px;
-}
-
-/* Searchbar */
-@keyframes swing {
-  0% {
-    transform: rotate(0deg);
-  }
-  10% {
-    transform: rotate(10deg);
-  }
-  30% {
-    transform: rotate(0deg);
-  }
-  40% {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  60% {
-    transform: rotate(5deg);
-  }
-  70% {
-    transform: rotate(0deg);
-  }
-  80% {
-    transform: rotate(-5deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes sonar {
-  0% {
-    transform: scale(0.9);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-#close-sidebar {
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-/*----------------toggeled sidebar----------------*/
-
-.page-wrapper.toggled .sidebar-wrapper {
-  left: 0px;
-}
-
-@media screen and (min-width: 768px) {
-  .page-wrapper.toggled .page-content {
-    padding-left: 300px;
-  }
-}
-/*----------------show sidebar button----------------*/
-#show-sidebar {
-  position: fixed;
-  left: 0;
-  top: 10px;
-  border-radius: 0 4px 4px 0px;
-  width: 35px;
-  transition-delay: 0.3s;
-}
-.page-wrapper.toggled #show-sidebar {
-  left: -40px;
-}
-/*----------------sidebar-wrapper----------------*/
-
-.sidebar-wrapper {
-  width: 260px;
-  height: 100%;
-  max-height: 100%;
-  position: fixed;
-  top: 0;
-  left: -300px;
-  z-index: 999;
-}
-
-.sidebar-wrapper ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-wrapper a {
-  text-decoration: none;
 }

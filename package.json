@@ -4,7 +4,8 @@
   "description": "website to view old publications form the Watchtower Bible and Tract Society",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "server": "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
     "hbs": "^4.0.4",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
+    "nodemon": "^1.19.1",
+    "open": "^6.4.0",
     "pg": "^7.9.0"
   }
 }
