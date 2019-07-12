@@ -1,59 +1,64 @@
-<h2>Search Results for "{{title}}"</h2>
-<div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpet">
-  {{#if searchResult}}
-    {{#each searchResult}}
-      <div class="srItem w-100">
-        <h3><a href="/lib/{{this.cat1}}/{{this.cat2}}/{{this.cat3}}/p{{this.pg}}">{{this.cat1}} -> {{this.cat2}} -> {{this.cat3}} -> pg{{this.pg}} </a></h3>
-        <p>... {{this.ts_headline}} ...</p>
-      </div>
-    {{/each}}
-  {{else}}
-    No results :c
-  {{/if}}
+<div class="wrapper">
+  
+  <div class="col-12 col-md-12 col-xl-10" id='body'>
+    <h2>Search Results for "{{title}}"</h2>
+    <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpet">
+      {{#if searchResult}}
+        {{#each searchResult}}
+          <div class="srItem w-100">
+            <h3><a href="/lib/{{this.cat1}}/{{this.cat2}}/{{this.cat3}}/p{{this.pg}}">{{this.cat1}} -> {{this.cat2}} -> {{this.cat3}} -> pg{{this.pg}} </a></h3>
+            <p>... {{this.ts_headline}} ...</p>
+          </div>
+        {{/each}}
+      {{else}}
+        No results :c
+      {{/if}}
+    </div>
+    {{#if searchResult}}
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" id="pgPrev" href="&p={{pagination.pgPrev}}">Previous</a></li>
+        {{#each pagination.pgArr}}
+        <li class="page-item" id="pg{{this}}"><a class="page-link" href="&p={{this}}">{{this}}</a></li>
+        {{/each}}
+        <li class="page-item"><a class="page-link" id="pgNext" href="&p={{pagination.pgNext}}">Next</a></li>
+      </ul>
+    {{/if}}
+
+    <script>
+      //fixes links inside search results, particularly the ones in the
+      //pagination bar at the bottom by adding search results attribute
+      function fixsrLinks(){
+        var x = document.querySelectorAll('.pagination .page-link');
+        var query = location.search.split('q=')[1]
+        query = query.split('&')[0]
+        Array.from(x).forEach((el) => {
+          // Do stuff here
+          var tempstr = el.href 
+          console.log('before:', el.href);
+          tempstr = tempstr.replace(/3000\//gi,'3000/search?q=' + query)
+          console.log('query: ', query);
+          el.href = tempstr
+          console.log('after: ', el.href);
+        });
+
+        //TODO:
+        // delete prev/next buttons when at end of results
+      }
+      // this sets active page number inside search resutls paginator
+      function setActivePg() {
+        // grabs page nunber, preprocesses it
+        var pgNumber = location.search.split('p=')[1]
+        if (pgNumber == null) pgNumber = 1
+
+        // sets page number in pagnated search result to 'active'
+        var el = document.getElementById("pg" + pgNumber);
+        el.className += " active";
+
+      }
+      // do these things onnce page finishes loading
+      document.addEventListener('DOMContentLoaded', setActivePg(), false);
+      document.addEventListener('DOMContentLoaded', fixsrLinks(), false);
+
+    </script>
+  </div>
 </div>
-{{#if searchResult}}
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" id="pgPrev" href="&p={{pagination.pgPrev}}">Previous</a></li>
-    {{#each pagination.pgArr}}
-    <li class="page-item" id="pg{{this}}"><a class="page-link" href="&p={{this}}">{{this}}</a></li>
-    {{/each}}
-    <li class="page-item"><a class="page-link" id="pgNext" href="&p={{pagination.pgNext}}">Next</a></li>
-  </ul>
-{{/if}}
-
-<script>
-  //fixes links inside search results, particularly the ones in the
-  //pagination bar at the bottom by adding search results attribute
-  function fixsrLinks(){
-    var x = document.querySelectorAll('.pagination .page-link');
-    var query = location.search.split('q=')[1]
-    query = query.split('&')[0]
-    Array.from(x).forEach((el) => {
-      // Do stuff here
-      var tempstr = el.href 
-      console.log('before:', el.href);
-      tempstr = tempstr.replace(/3000\//gi,'3000/search?q=' + query)
-      console.log('query: ', query);
-      el.href = tempstr
-      console.log('after: ', el.href);
-    });
-
-    //TODO:
-    // delete prev/next buttons when at end of results
-  }
-  // this sets active page number inside search resutls paginator
-  function setActivePg() {
-    // grabs page nunber, preprocesses it
-    var pgNumber = location.search.split('p=')[1]
-    if (pgNumber == null) pgNumber = 1
-
-    // sets page number in pagnated search result to 'active'
-    var el = document.getElementById("pg" + pgNumber);
-    el.className += " active";
-
-  }
-  // do these things onnce page finishes loading
-  document.addEventListener('DOMContentLoaded', setActivePg(), false);
-  document.addEventListener('DOMContentLoaded', fixsrLinks(), false);
-
-</script>
