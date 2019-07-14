@@ -1,13 +1,35 @@
+<div id="breadcrumbsBar" class="bg-light border-bottom box-shadow">
+  <div class="wrapper">
+    <div class="col-12 col-md-12 col-xl-10" id='breadcrumbsBarCentering'>
+        <h4 class="font-weight-bold breadcrumsElement"><small>Search Results for "{{title}}"</small></h4>
+
+        <div class="breadcrumsElement settings float-right">
+            <div class="btn-group">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Layout
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 <div class="wrapper">
   
   <div class="col-12 col-md-12 col-xl-10" id='body'>
+
+
     <h2>Search Results for "{{title}}"</h2>
     <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpet">
       {{#if searchResult}}
         {{#each searchResult}}
           <div class="srItem w-100">
             <h3><a href="/lib/{{this.cat1}}/{{this.cat2}}/{{this.cat3}}/p{{this.pg}}">{{this.cat1}} -> {{this.cat2}} -> {{this.cat3}} -> pg{{this.pg}} </a></h3>
-            <p>... {{this.ts_headline}} ...</p>
+            <p>... {{{this.ts_headline}}} ...</p>
           </div>
         {{/each}}
       {{else}}

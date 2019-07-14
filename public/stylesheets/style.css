@@ -6,11 +6,24 @@
   margin: auto;
   }
 }
+
+@media (min-width: 568px) {
+  #breadcrumbsBarCentering {
+  /*padding: 3rem;
+  max-width: 1200px; */
+  margin: auto;
+  }
+}
+
 #searchbox {
   margin:auto;
 }
 /*#breadcrumbsMenu {
 }*/
+
+.breadcrumsElement {
+  display: inline-block;
+}
 
 #searchSettings {
   fill: white !important;

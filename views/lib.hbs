@@ -1,7 +1,23 @@
 <div id="breadcrumbsBar" class="bg-light border-bottom box-shadow">
-    <h4 class="font-weight-bold"><small>{{searchResult.0.cat1}} &#8594; {{searchResult.0.cat2}} &#8594; {{searchResult.0.cat3}} &#8594; pg{{searchResult.0.pg}}</small></h4>
-</div>
+  <div class="wrapper">
+    <div class="col-12 col-md-12 col-xl-10" id='breadcrumbsBarCentering'>
+        <h4 class="font-weight-bold breadcrumsElement"><small>{{searchResult.0.cat1}} &#8594; {{searchResult.0.cat2}} &#8594; {{searchResult.0.cat3}} &#8594; pg{{searchResult.0.pg}}</small></h4>
 
+        <div class="breadcrumsElement settings float-right">
+            <div class="btn-group">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Layout
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
+                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 <div class="wrapper">
   
   <div class="col-12 col-md-12 col-xl-10" id='body'>
@@ -20,17 +36,6 @@
     </div>
 
     <p>{{urlSettings}}</p>
-    <div class="settings">
-        <div class="btn-group">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Layout
-            </button>
-            <div class="dropdown-menu">
-                <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
-                <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
-                <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-            </div>
-        </div>
-    </div>
+
   </div>
 </div>
