@@ -59,12 +59,12 @@
 
 
     <h2>Search Results for "{{title}}"</h2>
-    <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpet">
+    <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpt">
       {{#if searchResult}}
         {{#each searchResult}}
           <div class="srItem w-100">
             <h3><a href="/lib/{{this.cat1}}/{{this.cat2}}/{{this.cat3}}/p{{this.pg}}">{{this.cat1}} -> {{this.cat2}} -> {{this.cat3}} -> pg{{this.pg}} </a></h3>
-            <p>... {{{this.ts_headline}}} ...</p>
+            <p>... {{{this.excerpt}}} ...</p>
           </div>
         {{/each}}
       {{else}}

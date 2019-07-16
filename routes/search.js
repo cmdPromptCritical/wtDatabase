@@ -39,7 +39,7 @@ function genPgNums(pgNum, pgLimit = 10){
 };
 
 function queryTxt(query, res, pgNum = 1) {
-  let queryStr = "select generate_series(1,10000000) AS n, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, plainto_tsquery('" + query + "'), 'MaxFragments=3, MaxWords=45') from wt_docs WHERE searchtext @@ plainto_tsquery('" + query + "') LIMIT 20;"
+  let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=45') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20) as foo;"
   let searchdb = new Promise((resolve, reject) => {
     db.query(queryStr, (err, res) => {
       if (err) {
