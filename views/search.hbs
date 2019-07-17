@@ -1,7 +1,7 @@
 <div id="breadcrumbsBar" class="bg-light border-bottom box-shadow">
   <div class="wrapper">
     <div class="col-12 col-md-12 col-xl-10" id='breadcrumbsBarCentering'>
-        <h4 class="font-weight-bold breadcrumsElement"><small>Search Results for "{{title}}"</small></h4>
+        <h4 class="font-weight-bold breadcrumsElement"><small>Search Results for "{{query}}"</small></h4>
 
         <div class="breadcrumsElement settings float-right">
             <div class="btn-group">
@@ -20,20 +20,52 @@
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter by Category
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
+                <div class="dropdown-menu dropdown-menu-right">                    
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check" id="checkAll" > Check All
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Insight
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Watchtower
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Awake!
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Books
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Yearbooks
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Memos
+                    </label>
+                  </div>
+                  <div class="dropdown-item" onclick="event.stopPropagation();">
+                    <label>
+                      <input type="checkbox" class="check"> Tracts
+                    </label>
+                  </div>
+                  <div class="dropdown-item">
+                    <label>
+                      <button type="submit" class="btn btn-primary">Apply</button>
+                    </label>
+                  </div>
                 </div>
             </div>
         </div>
@@ -43,9 +75,19 @@
                     Filter by Date
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
+                  <div class="dropdown-item">
+                    <label for="exampleDropdownFormEmail1">Start Year: </label>
+                    <input class="form-control" id="drpdwnStartYear" placeholder="1884">
+                    <label for="exampleDropdownFormEmail1">End Year: </label>
+                    <input class="form-control" id="drpdwnStartYear" placeholder="1924">
+
+                  </div>
+                  <div class="dropdown-item">
+                    <label>
+                      <button type="submit" class="btn btn-primary">Apply</button>
+                      <a href="">Cancel</a>
+                    </label>
+                  </div>
                 </div>
             </div>
         </div>
@@ -58,7 +100,7 @@
   <div class="col-12 col-md-12 col-xl-10" id='body'>
 
 
-    <h2>Search Results for "{{title}}"</h2>
+    <h2>Search Results for "{{query}}"</h2>
     <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpt">
       {{#if searchResult}}
         {{#each searchResult}}
@@ -101,6 +143,7 @@
         //TODO:
         // delete prev/next buttons when at end of results
       }
+
       // this sets active page number inside search resutls paginator
       function setActivePg() {
         // grabs page nunber, preprocesses it
@@ -112,6 +155,12 @@
         el.className += " active";
 
       }
+      
+      // selects all/none when select all/none is clicked
+      $("#checkAll").click(function () {
+          $(".check").prop('checked', $(this).prop('checked'));
+      });
+      
       // do these things onnce page finishes loading
       document.addEventListener('DOMContentLoaded', setActivePg(), false);
       document.addEventListener('DOMContentLoaded', fixsrLinks(), false);

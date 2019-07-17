@@ -13,43 +13,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    jQuery(function ($) {
-
-        $(".sidebar-dropdown > a").click(function() {
-      $(".sidebar-submenu").slideUp(200);
-      if (
-        $(this)
-          .parent()
-          .hasClass("active")
-      ) {
-        $(".sidebar-dropdown").removeClass("active");
-        $(this)
-          .parent()
-          .removeClass("active");
-      } else {
-        $(".sidebar-dropdown").removeClass("active");
-        $(this)
-          .next(".sidebar-submenu")
-          .slideDown(200);
-        $(this)
-          .parent()
-          .addClass("active");
-      }
-    });
-
-    $("#close-sidebar").click(function() {
-      $(".page-wrapper").removeClass("toggled");
-    });
-    $("#show-sidebar").click(function() {
-      $(".page-wrapper").addClass("toggled");
-    });
-
-
-      
-      
-    });
-  </script>  
+ 
     <!-- begin header -->
     <nav class="navbar navbar-expand-md navbar-light sticky-top bg-white border-bottom box-shadow "> <!-- original tags: navbar my-2 my-md-0 mr-md-3 -->
       <a class="navbar-brand font-weight-bold" href="/"> Watchtower Archives</a>
@@ -57,7 +21,11 @@
       <div id="searchbox" class="justify-content-center d-sm-none d-md-block container" style="margin-left:10px; margin-right:10px">
         <form class="form-inline row w-100" method='get' action='/search'>
           <div class="input-group w-100">
-            <input type="text" class="form-control col-12" placeholder="Search" name='q'>
+            {{#if query}}
+            <input type="text" id="searchbarHeader" class="form-control col-12" value="{{query}}" name='q'>
+            {{else}}
+            <input type="text" id="searchbarHeader" class="form-control col-12" placeholder="Search" name='q'>
+            {{/if}}
             <span class="input-group-btn">
               <button class="btn btn-primary" type="submit">
                 <span class="img-search"></span>
@@ -70,15 +38,14 @@
       <div id="searchbox" class="justify-content-center d-none d-sm-block d-md-none" style="margin-left:10px; margin-right:10px">
         <form class="form-inline w-100" method='get' action='/search'>
           <div class="input-group w-100">
+            {{#if query}}
+            <input type="text" class="form-control col-12" value="{{query}}" name='q'>
+            {{else}}
             <input type="text" class="form-control col-12" placeholder="Search" name='q'>
+            {{/if}}
             <span class="input-group-btn">
               <button class="btn btn-primary" type="submit">
                 <span class="img-search"></span>
-              </button>
-            </span>
-            <span class="input-group-btn">
-              <button class="btn btn-secondary" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                <span class="img-search" id="searchSettings"></span>
               </button>
             </span>
           </div>

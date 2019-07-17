@@ -25,14 +25,14 @@
   display: inline-block;
 }
 
-#searchSettings {
+/*#searchSettings {
   fill: white !important;
   stroke: white !important;
   background-image: url(/images/gear.svg);
   display: inline-block;
   width: 14px;
   height: 16px;
-}
+}*/
 
 .img-search {
   fill: white !important;

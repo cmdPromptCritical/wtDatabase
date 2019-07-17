@@ -39,6 +39,7 @@ function genPgNums(pgNum, pgLimit = 10){
 };
 
 function queryTxt(query, res, pgNum = 1) {
+  var searchHits; //stores number of search results that match query
   let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=45') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20) as foo;"
   let searchdb = new Promise((resolve, reject) => {
     db.query(queryStr, (err, res) => {
@@ -59,8 +60,10 @@ function queryTxt(query, res, pgNum = 1) {
     let pgNums = genPgNums(pgNum)
     console.log(pgNums)
     res.render('search', { 
-      title: query , 
-      searchResult: queryRes, 
+      title: 'Search Results for "' + query + '"' ,
+      query: query,
+      searchResult: queryRes,
+      searchHits: searchHits,
       pagination: { pgArr: pgNums.pgArr, page: pgNum, pgPrev: pgNums.pgPrev, pgNext: pgNums.pgNext,  limit:10, totalRows: 5 }
     });
   
