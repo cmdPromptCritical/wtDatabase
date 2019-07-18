@@ -37,11 +37,10 @@ function genPgNums(pgNum, pgLimit = 10){
     pgNext: pgNext
   };
 };
-
-function queryTxt(query, res, pgNum = 1) {
-  var searchHits; //stores number of search results that match query
+var aqueryTxt = (query, res, pgNum = 1) => {
+  console.log('starting query...');
   let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=45') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20) as foo;"
-  let searchdb = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     db.query(queryStr, (err, res) => {
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
@@ -49,35 +48,68 @@ function queryTxt(query, res, pgNum = 1) {
         console.log('query: ', queryStr)
         reject()
       } else {
-          queryRes = res.rows
+        let queryRes = res.rows
   
-          //console.log(queryRes)
-        resolve()
+        //console.log(queryRes)
+        resolve(queryRes)
       }
     });
-  })
-  searchdb.then(() => {
-    let pgNums = genPgNums(pgNum)
-    console.log(pgNums)
-    res.render('search', { 
-      title: 'Search Results for "' + query + '"' ,
-      query: query,
-      searchResult: queryRes,
-      searchHits: searchHits,
-      pagination: { pgArr: pgNums.pgArr, page: pgNum, pgPrev: pgNums.pgPrev, pgNext: pgNums.pgNext,  limit:10, totalRows: 5 }
+  });
+}
+var getResultsCount = (query, res) => {
+  console.log('starting getResultsCount...');
+  let queryStr = "SELECT count(docid) as searchHits FROM wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q;"
+  return new Promise((resolve, reject) => {
+    db.query(queryStr, (err, res) => {
+      if (err) {
+        console.log('no search results, or something went wrong when searching through the db')
+        console.log('error: ', err)
+        console.log('query: ', queryStr)
+        reject()
+      } else {
+        let searchHits = parseInt(res.rows[0].searchhits)
+        //console.log(queryRes)
+        resolve(searchHits)
+      }
     });
-  
-  }).catch( () => {
-    res.render('search', { title: 'Search Results for "' + query + '"'});
+  });
+}
+var renderSearchResults = (query, searchHits, queryRes, pgNum, res) => {
+  let pgNums = genPgNums(pgNum)
+  console.log('pgNums: ', pgNums)
+  //console.log('title: ', res)
+  console.log('searchResults: ', queryRes)
+  res.render('search', { 
+    title: 'Search Results for "' + query + '"' ,
+    query: query,
+    searchResult: queryRes,
+    searchHits: searchHits,
+    pagination: { pgArr: pgNums.pgArr, page: pgNum, pgPrev: pgNums.pgPrev, pgNext: pgNums.pgNext,  limit:10, totalRows: 5 }
+  });
+}
+var concurrentPromise = function(q, res, pgNum) {
+  return Promise.all([aqueryTxt(q, res, pgNum), getResultsCount(q, res)])
+   	.then((messages) => {
+    //console.log('message0: ', messages[0]); // slow
+    //console.log('message1: ', messages[1]); // fast
+    let queryRes = messages[0];
+    let searchHits = messages[1];
+    renderSearchResults(q, searchHits, queryRes, pgNum, res)
   })
-};
+    .catch((e) =>{
+    console.log('something went sideways while querying db.');
+})
+
+}
+
 
 /* GET search page. */
 router.get('/', (req, res, next) => {
   let q = req.query.q
   let pgNum = parseInt(req.query.p, 10)
   console.log(q)
-  let searchdb = queryTxt(q, res, pgNum)
+  //let searchdb = aqueryTxt(q, res, pgNum)
+  concurrentPromise(q, res, pgNum);
 
 });
 
