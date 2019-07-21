@@ -128,28 +128,7 @@
         instance.markRegExp(regexPhrase);
         
     }
-    //highlights text which matches the query
-    function highlightMatches(query) {
 
-        //clean parentheses and other odd characters
-        query = decodeURIComponent(query);      //converts to readable text
-        query = query.split('+')                //splits into individual words
-        //grabs text from non-pdf/non-image layouts
-        var docText = document.getElementById('docViewer').innerHTML
-        var x = document.querySelectorAll('#docViewer p');
-
-        //iterate over each query word to insert highlights
-        Array.from(x).forEach((paragraph) => {
-            var tempstr = paragraph.innerHTML;
-            query.forEach((q) => {   //removes non alphanumeric chars
-                q = q.replace(/\W/g, '');
-                tempstr = tempstr.replace(q, '<mark>' + q + '</mark>')
-                console.log(tempstr)
-                paragraph.innerHTML = tempstr;
-            });
-        });
-        document.getElementById('docViewer').innerHTML = docText
-    }
     let urlParams = getAllUrlParams(window.location.href);
     
     document.addEventListener('DOMContentLoaded', highlight(urlParams.q), false);
