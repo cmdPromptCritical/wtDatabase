@@ -100,8 +100,8 @@
   <div class="col-12 col-md-12 col-xl-10" id='body'>
 
 
-    <p>{{searchHits}} results:</p>
     <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpt">
+    <p>{{searchHits}} results:</p>
       {{#if searchResult}}
         {{#each searchResult}}
           <div class="srItem w-100">
@@ -128,16 +128,18 @@
       //pagination bar at the bottom by adding search results attribute
       function fixsrLinks(){
         var x = document.querySelectorAll('.pagination .page-link');
+        //identifies query
         var query = location.search.split('q=')[1]
         query = query.split('&')[0]
+        //converts queryselector to array and iterates for each element (I think)
         Array.from(x).forEach((el) => {
           // Do stuff here
           var tempstr = el.href 
-          console.log('before:', el.href);
+          //console.log('before:', el.href);
           tempstr = tempstr.replace(/3000\//gi,'3000/search?q=' + query)
-          console.log('query: ', query);
+          //console.log('query: ', query);
           el.href = tempstr
-          console.log('after: ', el.href);
+          //console.log('after: ', el.href);
         });
 
         //TODO:
@@ -161,10 +163,99 @@
           $(".check").prop('checked', $(this).prop('checked'));
       });
       
+      // gets all url parameters , returns an object, check out: https://www.sitepoint.com/get-url-parameters-with-javascript/
+      // retrieve data like: getAllUrlParams().q 
+      function getAllUrlParams(url) {
+
+        // get query string from url (optional) or window
+        var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+
+        // we'll store the parameters here
+        var obj = {};
+
+        // if query string exists
+        if (queryString) {
+
+          // stuff after # is not part of query string, so get rid of it
+          queryString = queryString.split('#')[0];
+
+          // split our query string into its component parts
+          var arr = queryString.split('&');
+
+          for (var i = 0; i < arr.length; i++) {
+            // separate the keys and the values
+            var a = arr[i].split('=');
+
+            // set parameter name and value (use 'true' if empty)
+            var paramName = a[0];
+            var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
+
+            // (optional) keep case consistent
+            paramName = paramName.toLowerCase();
+            if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+
+            // if the paramName ends with square brackets, e.g. colors[] or colors[2]
+            if (paramName.match(/\[(\d+)?\]$/)) {
+
+              // create key if it doesn't exist
+              var key = paramName.replace(/\[(\d+)?\]/, '');
+              if (!obj[key]) obj[key] = [];
+
+              // if it's an indexed array e.g. colors[2]
+              if (paramName.match(/\[\d+\]$/)) {
+                // get the index value and add the entry at the appropriate position
+                var index = /\[(\d+)\]/.exec(paramName)[1];
+                obj[key][index] = paramValue;
+              } else {
+                // otherwise add the value to the end of the array
+                obj[key].push(paramValue);
+              }
+            } else {
+              // we're dealing with a string
+              if (!obj[paramName]) {
+                // if it doesn't exist, create property
+                obj[paramName] = paramValue;
+              } else if (obj[paramName] && typeof obj[paramName] === 'string'){
+                // if property does exist and it's a string, convert it to an array
+                obj[paramName] = [obj[paramName]];
+                obj[paramName].push(paramValue);
+              } else {
+                // otherwise add the property
+                obj[paramName].push(paramValue);
+              }
+            }
+          }
+        }
+
+        return obj;
+      }
+
+      var urlParams = getAllUrlParams(window.location.href);
+
       // do these things onnce page finishes loading
       document.addEventListener('DOMContentLoaded', setActivePg(), false);
       document.addEventListener('DOMContentLoaded', fixsrLinks(), false);
+      document.addEventListener('DOMContentLoaded', fixsrLinks(), false);
 
+      
+      // do these whenever
+      // adds the query text to the urls of the search results
+      function addQuerytoUrl(query) {
+        var x = document.querySelectorAll('.srItem a');
+        console.log(x);
+        //converts queryselector to array and iterates for each element (I think)
+        Array.from(x).forEach((el) => {
+          // Do stuff here
+          var tempstr = el.href 
+          console.log('before:', el.href);
+          tempstr = tempstr.concat('?q=' + query)
+          console.log('query: ', query);
+          el.href = tempstr
+          console.log('after: ', el.href);
+        });
+      }
+
+      addQuerytoUrl(urlParams.q);
     </script>
   </div>
 </div>

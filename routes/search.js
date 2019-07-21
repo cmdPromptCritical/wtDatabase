@@ -87,7 +87,7 @@ var renderSearchResults = (query, searchHits, queryRes, pgNum, res) => {
     pagination: { pgArr: pgNums.pgArr, page: pgNum, pgPrev: pgNums.pgPrev, pgNext: pgNums.pgNext,  limit:10, totalRows: 5 }
   });
 }
-var concurrentPromise = function(q, res, pgNum) {
+var initSearch = function(q, res, pgNum) {
   return Promise.all([aqueryTxt(q, res, pgNum), getResultsCount(q, res)])
    	.then((messages) => {
     //console.log('message0: ', messages[0]); // slow
@@ -98,8 +98,7 @@ var concurrentPromise = function(q, res, pgNum) {
   })
     .catch((e) =>{
     console.log('something went sideways while querying db.');
-})
-
+});
 }
 
 
@@ -108,8 +107,8 @@ router.get('/', (req, res, next) => {
   let q = req.query.q
   let pgNum = parseInt(req.query.p, 10)
   console.log(q)
-  //let searchdb = aqueryTxt(q, res, pgNum)
-  concurrentPromise(q, res, pgNum);
+  // begin search process, render when done
+  initSearch(q, res, pgNum);
 
 });
 
