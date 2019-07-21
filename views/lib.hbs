@@ -124,13 +124,20 @@
         }
         tmpregexPhrase += ''
         var regexPhrase = new RegExp(tmpregexPhrase)
-        console.log(regexPhrase, 'gi')
         instance.markRegExp(regexPhrase);
         
     }
-
+    function addquerytoSearchbox(query) {
+        // adds query to searchbox so that it is not empty
+        var x = document.getElementById('searchbarHeader');
+        query = decodeURIComponent(query);      //converts to readable text
+        query = query.replace(/[^a-zA-z0-9 ]/g, ' ');
+        console.log(query)
+        x.value = query 
+    }
     let urlParams = getAllUrlParams(window.location.href);
     
     document.addEventListener('DOMContentLoaded', highlight(urlParams.q), false);
+    document.addEventListener('DOMContentLoaded', addquerytoSearchbox(urlParams.q), false);
 
 </script>
