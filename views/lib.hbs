@@ -1,3 +1,4 @@
+{{!-- used as a viewer for wt documents --}}
 <div id="breadcrumbsBar" class="bg-light border-bottom box-shadow">
   <div class="wrapper">
     <div class="col-12 col-md-12 col-xl-10" id='breadcrumbsBarCentering'>
@@ -136,6 +137,7 @@
         x.value = query 
     }
     let urlParams = getAllUrlParams(window.location.href);
+    console.log(window.location)
     
     document.addEventListener('DOMContentLoaded', highlight(urlParams.q), false);
     document.addEventListener('DOMContentLoaded', addquerytoSearchbox(urlParams.q), false);
