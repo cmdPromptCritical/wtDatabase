@@ -9,10 +9,10 @@
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Layout
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=pdf'">PDF</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=txt'">1 Column</button>
-                    <button class="dropdown-item" type="button" onclick="location.href='?v=html'">2 Columns</button>
+                <div class="dropdown-menu dropdown-menu-right" id="pleb">
+                    <button class="dropdown-item" id='layoutBtn-pdf' type="button" onclick="javascript:function() {window.location = 'https://google.ca';}">PDF</button>
+                    <button class="dropdown-item" id="layoutBtn-1col" type="button" >1 Column</button>
+                    <button class="dropdown-item" id='layoutBtn-2col' type="button" >2 Columns</button>
                 </div>
             </div>
         </div>
@@ -136,10 +136,27 @@
         console.log(query)
         x.value = query 
     }
+    function addSearchRestoLayoutUrls() {
+        //saw that some urls (the layout options) needed search results query added to url
+        //this does that after loading webpage
+        //var url = document.location //full url with params
+        var urlnoparams = window.location.href.split('?')[0];
+        const query2col = new URLSearchParams(window.location.search);
+        const query1col = new URLSearchParams(window.location.search);
+        const querypdf = new URLSearchParams(window.location.search);
+        query2col.set("v", "html");
+        query1col.set("v", "txt");
+        querypdf.set("v", "pdf");
+
+        //updates links if there are any parameters
+        document.getElementById('layoutBtn-2col').addEventListener('click',function() {window.location = urlnoparams + '?' + query2col;})
+        document.getElementById('layoutBtn-1col').addEventListener('click',function() {window.location = urlnoparams + '?' + query1col;})
+        document.getElementById('layoutBtn-pdf').addEventListener('click',function() {window.location = urlnoparams + '?' + querypdf;})
+    }
     let urlParams = getAllUrlParams(window.location.href);
     console.log(window.location)
     
     document.addEventListener('DOMContentLoaded', highlight(urlParams.q), false);
     document.addEventListener('DOMContentLoaded', addquerytoSearchbox(urlParams.q), false);
-
+    document.addEventListener('DOMContentLoaded', addSearchRestoLayoutUrls(), false);
 </script>
