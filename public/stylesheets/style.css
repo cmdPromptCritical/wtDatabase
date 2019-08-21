@@ -20,7 +20,10 @@
 }
 /*#breadcrumbsMenu {
 }*/
-
+/* Browse-specific theming */
+.cat1-pubs {
+  width: 18rem;
+}
 .breadcrumsElement {
   display: inline-block;
 }
