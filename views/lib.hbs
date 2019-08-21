@@ -130,11 +130,13 @@
     }
     function addquerytoSearchbox(query) {
         // adds query to searchbox so that it is not empty
+        var params = query
         var x = document.getElementById('searchbarHeader');
         query = decodeURIComponent(query);      //converts to readable text
         query = query.replace(/[^a-zA-z0-9 ]/g, ' ');
-        console.log(query)
-        x.value = query 
+        // if query is defined
+        if(params != undefined) x.value = query;
+         
     }
     function addSearchRestoLayoutUrls() {
         //saw that some urls (the layout options) needed search results query added to url
