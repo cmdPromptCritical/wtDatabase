@@ -14,7 +14,11 @@
   margin: auto;
   }
 }
-
+@media (max-width: 568px) {
+  #breadcrumbsBarCentering h4 {
+    font-size: 1.3rem;
+  }
+}
 #searchbox {
   margin:auto;
 }

@@ -35,10 +35,10 @@ function getDoc(query, reqQuery, res, params = undefined) {
   if (typeof reqQuery.v != 'undefined') {
     console.log('reqQuery: ', reqQuery.v)
     if (reqQuery.v == 'html') {
-      var docType = 'bodyhtml';
+      var docType = 'bodyhtml2col';
     }
     if (reqQuery.v == 'txt') {
-      var docType = 'bodytxt';
+      var docType = 'bodyhtml';
     }
     if (reqQuery.v == 'pdf') {
       var docType = 'bodypdf';
