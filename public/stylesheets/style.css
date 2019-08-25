@@ -76,3 +76,46 @@
 b {
   font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif
 }
+
+/* main page styling */
+.masthead {
+  text-align: center;
+  color: black;
+  background-image: url(../images/main2-light.jpg);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+  height:95vh;
+}
+
+.intro-text {
+  padding-top:7vh;
+  padding-bottom: 25vh;
+}
+
+.intro-lead-in {
+  line-height: 40px;
+  margin-bottom: 4vh;
+  font-size: 25px;
+  font-style: italic;
+  font-family: 'Droid Serif',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+.intro-lead-in span {
+  background: rgba(255, 255, 255, 1);
+  padding: 5.5px;
+}
+
+.intro-heading {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);  font-size: 75px;
+  font-weight: 700;
+  line-height: 75px;
+  font-size: 45px;
+  margin-bottom: 4vh;
+  font-family: Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+.intro-heading span {
+  background: rgba(255, 255, 255, 1);
+  padding: 4.25px;
+}
+/* END main page styling */
