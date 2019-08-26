@@ -1,6 +1,43 @@
 <div class="wrapper">
   <div class="col-12 col-md-10 col-lg-8 col-xl-8" id='body'><h1>{{title}}</h1>
     <div class="row">
+      <div id="browseContainer" class="col-12">
+      </div>
+  </div>
+</div>
+<script>
+
+  //loads navigation element of 'browse' webpage
+  function initNavigation() {
+    var logElem = document.querySelector("#browseContainer");
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/browse/hello/howareyou');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            logElem.innerHTML += xhr.response;
+        }
+        else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+  }
+
+  // do asap
+  initNavigation();
+
+  //listens for a click anywhere on the webpage
+  document.addEventListener('click', function (event) {
+    // If the clicked element doesn't have the right selector, bail
+    if (!event.target.matches('.browseNavItem')) return;
+
+      // Log the clicked element in the console
+      console.log(event.target.getAttribute('q'));
+
+  }, false);
+</script>
+
+<!-- old card style, goes under wrapper > body > row:
       <div class="col-sm-6">
         <div class="card cat1-pubs">
           <img class='card-img-top' src='/images/watchtower-coverpage.jpg' alt='Watchtower Magazines'>
@@ -21,5 +58,4 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+ -->
