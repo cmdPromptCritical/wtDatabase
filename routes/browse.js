@@ -31,32 +31,40 @@ var getNavItems = (params) => {
   
   // compiles search query then executes
   var queryStr = "SELECT DISTINCT " + titleColumn + " FROM wt_docs" + whereCondition + ";"
-  console.log('search query: ', queryStr);
+  var queryv2 = `
+            SELECT ` + titleColumn + ` as title, max(pg) as pg, count(pg) as numDocs,
+            CASE
+              WHEN (count(pg) = 1) THEN true
+              ELSE false
+            END AS enableURL
+            FROM wt_docs` + whereCondition + " GROUP BY " + titleColumn + ";"
+  console.log('search query: ', queryv2);
   return new Promise((resolve, reject) => {
-    db.query(queryStr, (err, res) => {
+    db.query(queryv2, (err, res) => {
       if (err) {
         console.log('no nav query results, or something went wrong when searching through the db')
         console.log('error: ', err)
-        console.log('query: ', queryStr)
+        console.log('query: ', queryv2)
         reject()
       } else {
         // saves search results to variable
         var searchHits = res.rows
+        console.log(res.rows[0].title)
 
         // repackages variable from a messy object into a pretty list
-        var results = [];
-        searchHits.forEach(resultRow => {
-          results.push(resultRow.cat1)
-          results.push(resultRow.cat2)
-          results.push(resultRow.cat3)
-          results.push(resultRow.cat4)
-        });
+        //var results = [];
+        //searchHits.forEach(resultRow => {
+        //  results.push(resultRow.cat1)
+        //  results.push(resultRow.cat2)
+        //  results.push(resultRow.cat3)
+        //  results.push(resultRow.cat4)
+        //});
 
         // removes empty rows caused by always grabbing cat1/cat2/cat3/cat4 rows
-        var filterResults = results.filter((el) => {
-          return el != null
-        });
-        resolve(filterResults)
+        //var filterResults = results.filter((el) => {
+        //  return el != null
+        //});
+        resolve(searchHits)
       }
     });
   });
