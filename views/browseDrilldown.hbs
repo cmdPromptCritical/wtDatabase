@@ -1,7 +1,26 @@
+
+<h3>Breadcrumbs:</h3>
+<li>{{params.cat1}}</li>
+<li>{{params.cat2}}</li>
+<li>{{params.cat3}}</li>
+<li>{{params.cat4}}</li>
+{{#if navItems}}
+    <h3>navItems:</h3>
+    <ul class="list-group">
+    {{#each navItems}}
+        <script>
+          console.log('{{navItems}}')
+        </script>
+        <a href="#" q="{{this}}" cat1="{{../params.cat1}}" cat2="{{../params.cat2}}" cat3="{{../params.cat3}}" cat4="{{../params.cat4}}" class="browseNavItem list-group-item list-group-item-action list-group-item-action">{{this}}</a>
+    {{/each}}
+    </ul>
+{{/if}}
+<!-- old static content:
 <ul class="list-group">
-  <a href="#" q="watchtower" class="browseNavItem list-group-item list-group-item-action">Watchtower</a>
+  <a href="#" q="Watchtower" url="" class="browseNavItem list-group-item list-group-item-action">Watchtower</a>
   <a href="#" class="browseNavItem list-group-item list-group-item-action list-group-item-secondary">Awake</a>
   <a href="#" class="browseNavItem list-group-item list-group-item-action list-group-item-success">Books</a>
   <a href="#" class="browseNavItem list-group-item list-group-item-action list-group-item-danger">Letters</a>
   <a href="#" class="browseNavItem list-group-item list-group-item-action list-group-item-warning">Yearbooks</a>
 </ul>
+-->

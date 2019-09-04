@@ -8,16 +8,31 @@
 <script>
 
   //loads navigation element of 'browse' webpage
-  function initNavigation() {
+  function initNavigation(params = null) {
     var logElem = document.querySelector("#browseContainer");
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/browse/hello/howareyou');
+
+    //if no params, just load the top level
+    if(params == null) { xhr.open('GET', '/browse/0') } else {
+      var paramsInUrl;
+      if(params.cat4) {
+        paramsInUrl = '/' + params.cat1 + '/' + params.cat2 + '/' + params.cat3 + '/' + params.cat4
+      } else if(params.cat3) {
+        paramsInUrl = '/' + params.cat1 + '/' + params.cat2 + '/' + params.cat3
+      } else if(params.cat2) {
+        paramsInUrl = '/' + params.cat1 + '/' + params.cat2
+      } else {
+        paramsInUrl = '/' + params.cat1
+      }
+      xhr.open('GET', '/browse/0' + paramsInUrl)
+      console.log('params sent to server: ', '/browse/0' + paramsInUrl)
+    }
     xhr.onload = function() {
         if (xhr.status === 200) {
-            logElem.innerHTML += xhr.response;
+            logElem.innerHTML = xhr.response;
         }
         else {
-            alert('Request failed.  Returned status of ' + xhr.status);
+            console.log('Request failed getting the Browse Navigation Items.  Returned status of ' + xhr.status);
         }
     };
     xhr.send();
@@ -33,6 +48,28 @@
 
       // Log the clicked element in the console
       console.log(event.target.getAttribute('q'));
+      console.log(event.target.getAttribute('cat1'));
+
+      // grabs parameters, adds row title to one of them based on what params are fed
+      var params;
+      params = {cat1: event.target.getAttribute('cat1'), 
+                cat2: event.target.getAttribute('cat2'), 
+                cat3: event.target.getAttribute('cat3'), 
+                cat4: event.target.getAttribute('cat4')}
+      console.log('params, initDefinition: ', params)
+      if(!params.cat1) {
+        console.log(!params.cat1, 'params.cat1: ' + params.cat1)
+        params.cat1 = event.target.getAttribute('q');
+      } else if (!params.cat2) {
+        params.cat2 = event.target.getAttribute('q');
+      } else if (!params.cat3) {
+        params.cat3 = event.target.getAttribute('q');
+      } else if (!params.cat4) {
+        params.cat4 = event.target.getAttribute('q');
+      }
+      console.log('params: ', params)
+      // since nav item was clicked, start a get req for the next menu
+      initNavigation(params)
 
   }, false);
 </script>
