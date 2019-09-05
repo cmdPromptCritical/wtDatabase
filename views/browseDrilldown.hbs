@@ -11,7 +11,7 @@
         <script>
           console.log('{{navItems}}')
         </script>
-        <a href="#" q="{{this.title}}" cat1="{{../params.cat1}}" cat2="{{../params.cat2}}" cat3="{{../params.cat3}}" cat4="{{../params.cat4}}" class="browseNavItem list-group-item list-group-item-action list-group-item-action">{{this.title}}</a>
+        <a href="#" q="{{this.title}}" cat1="{{../params.cat1}}" cat2="{{../params.cat2}}" cat3="{{../params.cat3}}" cat4="{{../params.cat4}}" pg="{{this.pg}}" numdocs="{{this.numdocs}}" endofTree="{{this.endoftree}}" class="browseNavItem list-group-item list-group-item-action list-group-item-action">{{this.title}}</a>
     {{/each}}
     </ul>
 {{/if}}

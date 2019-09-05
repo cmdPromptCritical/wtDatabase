@@ -24,12 +24,16 @@
       } else {
         paramsInUrl = '/' + params.cat1
       }
+
+      // adds extra parameter if params has an 'endoftree' property and it == null, indicates impending end of tree
+      if(params.hasOwnProperty('endoftree') && params.endoftree == "") {paramsInUrl += '?endoftree=T'}
       xhr.open('GET', '/browse/0' + paramsInUrl)
       console.log('params sent to server: ', '/browse/0' + paramsInUrl)
     }
     xhr.onload = function() {
         if (xhr.status === 200) {
             logElem.innerHTML = xhr.response;
+            addUrlstoNavItems(params, paramsInUrl);
         }
         else {
             console.log('Request failed getting the Browse Navigation Items.  Returned status of ' + xhr.status);
@@ -38,6 +42,25 @@
     xhr.send();
   }
 
+  // is executed whenver the nav items change, adds urls if at end of line
+  // if not at end of line, maybe add bubble count?
+  function addUrlstoNavItems(params, paramsUrl) {
+    var targets = document.getElementsByClassName("browseNavItem")
+    // iterates over all nav items
+    Array.from(targets).forEach((el) => {
+      // if there is only one page associated with that nav item,
+      // build url [todo]
+      paramsUrl = paramsUrl.replace("?endoftree=T", "")
+      var url = '/lib' + paramsUrl + '/p' + params.pg
+      console.log(url)
+      // add it to element (replace google with the built url)
+      if(el.getAttribute("numdocs") == 1) {
+        el.setAttribute("href", url)
+        el.innerHTML = 'Page ' + params.pg
+      }
+    });
+
+  }
   // do asap
   initNavigation();
 
@@ -55,7 +78,9 @@
       params = {cat1: event.target.getAttribute('cat1'), 
                 cat2: event.target.getAttribute('cat2'), 
                 cat3: event.target.getAttribute('cat3'), 
-                cat4: event.target.getAttribute('cat4')}
+                cat4: event.target.getAttribute('cat4'),
+                endoftree: event.target.getAttribute('endoftree'),
+                pg: event.target.getAttribute('pg')}
       console.log('params, initDefinition: ', params)
       if(!params.cat1) {
         console.log(!params.cat1, 'params.cat1: ' + params.cat1)
@@ -72,6 +97,13 @@
       initNavigation(params)
 
   }, false);
+
+  // Create an observer instance linked to the callback function
+  //const observer = new MutationObserver(addUrlstoNavItems);
+  //var target = document.getElementById("browseContainer")
+  //const config = {attributes: true, childList: true, subtree: true}
+  //observer.observe(target, config);
+
 </script>
 
 <!-- old card style, goes under wrapper > body > row:

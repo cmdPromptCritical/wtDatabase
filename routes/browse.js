@@ -5,34 +5,42 @@ var db = require('../db');
 // grabs all /browse GET requests
 // /browse sends the top level of the 
 /* GET about page. */
-var getNavItems = (params) => {
+var getNavItems = (params, resQuery) => {
   // queries db for nav items. parameters determine what level the nav is currently
   // at, and which where conditions to apply
 
   // checks which level to pull data
   var titleColumn;
+  var nextTitleColumn;
   var whereCondition = "";
   if(params.cat3) {
     titleColumn = 'cat4'
+    nextTitleColumn = 'null'
     whereCondition = " WHERE cat1 = '" + params.cat1 + "' AND cat2 = '" + params.cat2 +"'" + " AND cat3 = '" + params.cat3 +"'"
 
   } else if(params.cat2) {
     titleColumn = 'cat3'
+    nextTitleColumn = 'cat4'
     whereCondition = " WHERE cat1 = '" + params.cat1 + "' AND cat2 = '" + params.cat2 +"'"
 
   } else if(params.cat1) {
     titleColumn = 'cat2'
+    nextTitleColumn = 'cat3'
     whereCondition = " WHERE cat1 = '" + params.cat1 + "'"
 
   } else {
     titleColumn = 'cat1'
+    nextTitleColumn = 'cat2'
     // no where conditions needed
   }
   
+  // one last check: see if endoftree == T so it can pull pg#'s for titles
+  if(resQuery.endoftree == 'T') {titleColumn = 'pg'}
+
   // compiles search query then executes
   var queryStr = "SELECT DISTINCT " + titleColumn + " FROM wt_docs" + whereCondition + ";"
   var queryv2 = `
-            SELECT ` + titleColumn + ` as title, max(pg) as pg, count(pg) as numDocs,
+            SELECT ` + titleColumn + ` as title, max(pg) as pg, count(pg) as numDocs, max(length(` + nextTitleColumn + `)) as endofTree, 
             CASE
               WHEN (count(pg) = 1) THEN true
               ELSE false
@@ -71,8 +79,8 @@ var getNavItems = (params) => {
 }
 
 // currently being added
-var initNavSearch = function(params, res) {
-  return Promise.all([getNavItems(params)])
+var initNavSearch = function(params, reqQuery, res) {
+  return Promise.all([getNavItems(params, reqQuery)])
    	.then((messages) => {
     let navItems = messages[0];
     let paramsforDisplay = {cat1: params.cat1, cat2: params.cat2, cat3: params.cat3, cat4: params.cat4}
@@ -98,7 +106,8 @@ router.get('/0/:cat1?/:cat2?/:cat3?/:cat4?', function(req, res, next) {
   // - query the db for a list of entries
   //var navItems = getNavItems(req.params)
   // - render the browseDrilldown menu
-  initNavSearch(req.params, res)
+  console.log('aslfalskfjasjsdlfkj', req.query.endoftree)
+  initNavSearch(req.params, req.query, res)
   //  res.render('browseDrilldown', {params: params, navItems: navItems, layout: 'browseDrilldown', title: 'Browsing :D'});
 });
 
