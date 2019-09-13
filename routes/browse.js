@@ -35,7 +35,9 @@ var getNavItems = (params, resQuery) => {
   }
   
   // one last check: see if endoftree == T so it can pull pg#'s for titles
-  if(resQuery.endoftree == 'T') {titleColumn = 'pg'}
+  if(resQuery.endoftree == 'T') {
+    titleColumn = 'pg'
+  }
 
   // compiles search query then executes
   var queryStr = "SELECT DISTINCT " + titleColumn + " FROM wt_docs" + whereCondition + ";"
@@ -45,7 +47,9 @@ var getNavItems = (params, resQuery) => {
               WHEN (count(pg) = 1) THEN true
               ELSE false
             END AS enableURL
-            FROM wt_docs` + whereCondition + " GROUP BY " + titleColumn + ";"
+            FROM wt_docs` + whereCondition + " GROUP BY " + titleColumn + " ORDER BY title;"
+
+  // aaaand one last addition: see if endoftree == T so it can pull pg#'s for titles
   console.log('search query: ', queryv2);
   return new Promise((resolve, reject) => {
     db.query(queryv2, (err, res) => {
@@ -82,13 +86,19 @@ var getNavItems = (params, resQuery) => {
 var initNavSearch = function(params, reqQuery, res) {
   return Promise.all([getNavItems(params, reqQuery)])
    	.then((messages) => {
-    let navItems = messages[0];
+    var navItems = messages[0];
+    navItems = sortNavItems(navItems)
     let paramsforDisplay = {cat1: params.cat1, cat2: params.cat2, cat3: params.cat3, cat4: params.cat4}
     renderNavResults(paramsforDisplay, navItems, res)
   })
     .catch((e) =>{
     console.log('something went sideways while querying db.');
 });
+}
+
+// takes navItems object, sorts them based off of context
+function sortNavItems(navItems) {
+  return navItems
 }
 // currently being added
 var renderNavResults = (params, navItems, res) => {

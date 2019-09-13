@@ -56,7 +56,7 @@
       // add it to element (replace google with the built url)
       if(el.getAttribute("numdocs") == 1) {
         el.setAttribute("href", url)
-        el.innerHTML = 'Page ' + params.pg
+        el.innerHTML = 'Page ' + el.getAttribute('pg')
       }
     });
 
