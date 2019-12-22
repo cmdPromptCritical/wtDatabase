@@ -34,13 +34,14 @@ def computeOrderNumber(title):
 	"November": 11,
 	"December": 12
 	}
-	datefound = False
-	rnk = 0
+]	rnk = 0
 	for k, v in monthNames.items():
 		# if date found, get value of month
 		if k in title:
-			datefound = True
 			rnk = v
+
+	# if no month value found, sort alphabetically
+	
 	print("rank: " + str(rnk))
 	return rnk
 	
