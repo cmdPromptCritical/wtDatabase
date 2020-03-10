@@ -77,6 +77,10 @@ b {
   font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif
 }
 
+p {
+  line-height: 1.5;
+}
+
 /* main page styling */
 .masthead {
   text-align: center;
