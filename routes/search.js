@@ -39,9 +39,9 @@ function genPgNums(pgNum, pgLimit = 10){
 };
 var aqueryTxt = (query, res, pgNum = 1) => {
   console.log('starting query...');
-  let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20) as foo;"
+  let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20) as foo;" // don't use this for querying db!!!
   return new Promise((resolve, reject) => {
-    db.query(queryStr, (err, res) => {
+    db.query("SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery($1) q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20) as foo;", [query], (err, res) => {
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
         console.log('error: ', err)
@@ -58,9 +58,10 @@ var aqueryTxt = (query, res, pgNum = 1) => {
 }
 var getResultsCount = (query, res) => {
   console.log('starting getResultsCount...');
-  let queryStr = "SELECT count(docid) as searchHits FROM wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q;"
+  let queryStr = "SELECT count(docid) as searchHits FROM wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q;" // don't use this for querying db!!!
+  let queryStrParameterized = "SELECT count(docid) as searchHits FROM wt_docs, plainto_tsquery($1) q WHERE searchtext @@ q;"
   return new Promise((resolve, reject) => {
-    db.query(queryStr, (err, res) => {
+    db.query(queryStrParameterized, [query], (err, res) => {
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
         console.log('error: ', err)
