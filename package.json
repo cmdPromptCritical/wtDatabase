@@ -23,7 +23,7 @@
     "express": "~4.16.0",
     "express-handlebars": "^3.1.0",
     "express-handlebars-paginate": "^1.0.3",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.3.0",
     "handlebars-form-helpers": "^0.1.4",
     "hbs": "^4.0.4",
     "helmet": "^3.21.3",
