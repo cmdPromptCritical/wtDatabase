@@ -13,8 +13,9 @@ var libRouter = require('./routes/lib');
 var browseRouter = require('./routes/browse');
 var handlebars = require('handlebars')
 var helpers = require('handlebars-form-helpers').register(handlebars);
+var helmet = require('helmet');
 var app = express();
-
+app.use(helmet());
 // view engine setup
 var hbs = exphbs.create({
   helpers: {    foo: function() { return 'foo.';}},  //require('./handlers/handlebars'), 

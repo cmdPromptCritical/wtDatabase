@@ -26,6 +26,7 @@
     "handlebars": "^4.1.2",
     "handlebars-form-helpers": "^0.1.4",
     "hbs": "^4.0.4",
+    "helmet": "^3.21.3",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "nodemon": "^1.19.1",
