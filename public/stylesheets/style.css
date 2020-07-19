@@ -19,6 +19,10 @@
     font-size: 1.3rem;
   }
 }
+
+.breadcrumbsPath {
+	max-width:'70vw';  
+}
 #searchbox {
   margin:auto;
 }
