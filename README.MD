@@ -12,5 +12,5 @@ sudo -u postgres createdb wtdb
 # create user
 sudo -u postgres createuser wtdb
 sudo -u postgres psql
-sudo -u postgres psql -c "alter user wtdb with encrypted password '25YaDfAYHSBvFcpk';"
+sudo -u postgres psql -c "alter user wtdb with encrypted password 'dbuserpassword';"
 ```
