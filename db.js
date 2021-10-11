@@ -27,7 +27,7 @@ try {
     user: 'wtdb',
     host: 'localhost', //'192.168.2.11', //'74.14.8.225',
     database: 'wtdb',
-    password: '25YaDfAYHSBvFcpk',
+    password: 'HgZwwYZZcC8vzr84',
     port: 5432, //stock option was 3211
   });
 
