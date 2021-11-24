@@ -1,12 +1,16 @@
 Requirements:
--elasticsearch
+-postgres
+-nodejs
+```bash
+# install
+sudo apt install nodejs postgresql postgresql-contrib
 
-CONFIGURING ELASTICSEARCH
-Change/add these lines to  elasticsearch.yml:
-transport.host: localhost
-network.host: 0.0.0.0
-Change the max mem size in jvm.options to:
--Xms256m
--Xmx256m
-And run this for good measure to make sure the service is configured to start on reboot:
-sudo update-rc.d elasticsearch defaults 95 10
+# configure postgres
+# create db
+sudo -u postgres createdb wtdb
+
+# create user
+sudo -u postgres createuser wtdb
+sudo -u postgres psql
+sudo -u postgres psql -c "alter user wtdb with encrypted password 'dbuserpassword';"
+```
