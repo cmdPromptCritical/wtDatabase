@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon --watch ../ ./bin/www"
+    "dev": "nodemon --watch ../ ./bin/www --ignore '*.pdf'"
   },
   "repository": {
     "type": "git",
@@ -18,20 +18,20 @@
   },
   "homepage": "https://github.com/cmdPromptCritical/wtDatabase#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.5",
-    "debug": "~2.6.9",
+    "cookie-parser": "^1.4.6",
+    "debug": "~4.3.2",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
+    "express-handlebars": "^6.0.1",
     "express-handlebars-paginate": "^1.0.3",
     "handlebars": "^4.7.7",
     "handlebars-form-helpers": "^0.1.4",
-    "hbs": "^4.1.2",
-    "helmet": "^3.23.3",
-    "http-errors": "^1.8.0",
-    "morgan": "~1.9.0",
-    "nodemon": "^1.19.4",
-    "nouislider": "^14.7.0",
-    "open": "^6.4.0",
+    "hbs": "^4.2.0",
+    "helmet": "^4.6.0",
+    "http-errors": "^1.8.1",
+    "morgan": "~1.10.0",
+    "nodemon": "^2.0.15",
+    "nouislider": "^15.5.0",
+    "open": "^8.4.0",
     "pg": "^8.7.1"
   }
 }
