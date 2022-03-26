@@ -14,14 +14,17 @@ var browseRouter = require('./routes/browse');
 var handlebars = require('handlebars')
 var helpers = require('handlebars-form-helpers').register(handlebars);
 var helmet = require('helmet');
+
 var app = express();
 app.use(helmet());
+
 // view engine setup
 var hbs = exphbs.create({
   helpers: {    foo: function() { return 'foo.';}},  //require('./handlers/handlebars'), 
   defaultLayout: 'main', 
   extname: '.hbs'
 });
+
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', hbs.engine)
 app.set('view engine', '.hbs');
