@@ -14,11 +14,12 @@ const fs = require('fs');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '443');
+ var port = normalizePort(process.env.PORT || '443');
+ var httpRedirectPort = normalizePort(process.env.PORT_HTTP || '80');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
 var server = https.createServer({
@@ -32,7 +33,12 @@ var httpsRedirect = http.createServer((req, res) => {
   res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
   res.end();
 });
-httpsRedirect.listen(80);
+
+/**
+ * Create HTTP server to redirect all requests to HTTPS server.
+ */
+
+httpsRedirect.listen(httpRedirectPort);
 httpsRedirect.on('error', onError);
 httpsRedirect.on('listening', onListening);
 
