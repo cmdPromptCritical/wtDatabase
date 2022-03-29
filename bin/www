@@ -22,31 +22,38 @@ app.set('port', port);
  * Create HTTPS server.
  */
 
-var server = https.createServer({
-key: fs.readFileSync('key.pem'),
-cert: fs.readFileSync('cert.pem'),
-passphrase: 'fingermen'
-
-}, app);
-
-var httpsRedirect = http.createServer((req, res) => {
-  res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
-  res.end();
-});
-
-/**
- * Create HTTP server to redirect all requests to HTTPS server.
- */
-
-httpsRedirect.listen(httpRedirectPort);
-httpsRedirect.on('error', onError);
-httpsRedirect.on('listening', onListening);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
+let server;
+ if (process.env.NODE_ENV === "production") {
+  server = https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem'),
+  passphrase: 'fingermen'
+  
+  }, app);
+  
+  
+  var httpsRedirect = http.createServer((req, res) => {
+    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+    res.end();
+  });
+  
+  /**
+   * Create HTTP server to redirect all requests to HTTPS server.
+   */
+  
+  httpsRedirect.listen(httpRedirectPort);
+  httpsRedirect.on('error', onError);
+  httpsRedirect.on('listening', onListening);
+  
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+} else {
+  server = http.createServer(app);
+};
 
 server.listen(port);
+console.log('listening on port ', port)
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -106,7 +113,7 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'port ' + addr.port;
+    : 'port ' + addr
   debug('Listening on ' + bind);
 }
 
