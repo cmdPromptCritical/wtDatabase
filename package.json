@@ -4,7 +4,7 @@
   "description": "website to view old publications form the Watchtower Bible and Tract Society",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production node ./bin/www",
+    "start": "node ./bin/www",
     "dev": "NODE_ENV=dev PORT=3000 PORT_HTTP=3001 nodemon -w bin/www -w ./ -e js,mjs,json,hbs --ignore '*.pdf' .bin/www"
   },
   "repository": {
