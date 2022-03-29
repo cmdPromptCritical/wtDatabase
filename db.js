@@ -32,7 +32,12 @@ try {
   });
 
   pool.query('SELECT NOW()', (err, res) => {
-    console.log(res.rows[0])
+    try {
+      console.log(res.rows[0]);
+    } catch (error) {
+      console.error(error);
+    }
+
     if (err) {
       console.log('something went wrong when querying the db')
     }
