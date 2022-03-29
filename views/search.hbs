@@ -1,13 +1,27 @@
 <div id="breadcrumbsBar" class="bg-light border-bottom box-shadow">
   <div class="wrapper">
     <div class="col-12 col-md-12 col-xl-10" id='breadcrumbsBarCentering'>
-        <h4 class="font-weight-bold breadcrumsElement"><small>Search Results for "{{query}}"</small></h4>
+        <h5 class="font-weight-bold breadcrumsElement"><small>{{searchHits}} Results for "{{query}}"</small></h5>
 
         <div class="breadcrumsElement settings float-right">
         </div>
+        <!--div class="breadcrumsElement settings float-right">
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              (bs5 reference)
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div-->
         <div class="breadcrumsElement settings float-right">
             <div class="btn-group">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter by Category
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">                    
@@ -61,7 +75,7 @@
         </div>
         <div class="breadcrumsElement settings float-right">
             <div class="btn-group">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter by Date
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -91,7 +105,6 @@
 
 
     <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpt">
-    <p>{{searchHits}} results:</p>
       {{#if searchResult}}
         {{#each searchResult}}
           <div class="srItem w-100">
@@ -100,7 +113,9 @@
           </div>
         {{/each}}
       {{else}}
-        No results :c
+        <div class="srItem w-100">
+          <h3>No results :c</h3>
+        </div>
       {{/if}}
     </div>
     {{#if searchResult}}
@@ -114,6 +129,7 @@
     {{/if}}
 
     <script>
+      // ### pagination of search results
       //fixes links inside search results, particularly the ones in the
       //pagination bar at the bottom by adding search results attribute
       function fixsrLinks(){
@@ -148,7 +164,7 @@
 
       }
       
-      // selects all/none when select all/none is clicked
+      // toggles all/none options in "filter by Category" dropdown when select all/none is clicked
       $("#checkAll").click(function () {
           $(".check").prop('checked', $(this).prop('checked'));
       });

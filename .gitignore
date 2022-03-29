@@ -2,3 +2,5 @@ node_modules
 db.js
 public/pub
 .README.MD.swp
+cert.pem
+key.pem

@@ -4,8 +4,8 @@
   "description": "website to view old publications form the Watchtower Bible and Tract Society",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon --watch ../ ./bin/www --ignore '*.pdf'"
+    "start": "NODE_ENV=production node ./bin/www",
+    "dev": "PORT=3000 PORT_HTTP=3001 nodemon -w bin/www -w ./ -e js,mjs,json,hbs --ignore '*.pdf' .bin/www"
   },
   "repository": {
     "type": "git",
