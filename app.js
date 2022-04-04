@@ -16,7 +16,14 @@ var helpers = require('handlebars-form-helpers').register(handlebars);
 var helmet = require('helmet');
 
 var app = express();
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'code.jquery.com', "'unsafe-inline'", 'cdnjs.cloudflare.com','cdn.jsdelivr.net'],
+    styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'cdn.jsdelivr.net'],
+    fontSrc: ["'self'", 'fonts.googleapis.com', 'fonts.gstatic.com']
+  }
+ }));
 
 // view engine setup
 var hbs = exphbs.create({
