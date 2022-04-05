@@ -1,10 +1,9 @@
-<div id="breadcrumbsBar" class="bg-light border-bottom box-shadow">
-  <div class="wrapper">
-    <div class="col-12 col-md-12 col-xl-10" id='breadcrumbsBarCentering'>
-        <h5 class="font-weight-bold breadcrumsElement"><small>{{searchHits}} Results for "{{query}}"</small></h5>
+<div id="breadcrumbsBar" class="bg-light border-bottom">
+  <div class="container">
+    <div class="col-12 my-1" id='breadcrumbsBarCentering'>
+        <span class="font-weight-bold fs-5 align-center breadcrumsElement"><small>{{searchHits}} results for "{{query}}"</small></span>
 
-        <div class="breadcrumsElement settings float-right">
-        </div>
+
         <!--div class="breadcrumsElement settings float-right">
           <div class="btn-group">
             <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -19,7 +18,7 @@
             </ul>
           </div>
         </div-->
-        <div class="breadcrumsElement settings float-right">
+        <span class="breadcrumsElement settings float-right">
             <div class="btn-group">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter by Category
@@ -72,8 +71,8 @@
                   </div>
                 </div>
             </div>
-        </div>
-        <div class="breadcrumsElement settings float-right">
+        </span>
+        <span class="breadcrumsElement settings float-right">
             <div class="btn-group">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filter by Date
@@ -94,17 +93,17 @@
                   </div>
                 </div>
             </div>
-        </div>
+        </span>
 
     </div>
   </div>
 </div>
-<div class="wrapper">
+<div class="container">
   
-  <div class="col-12 col-md-12 col-xl-10" id='body'>
+  <div class="col-12" id='body'>
 
 
-    <div class="searchResultsContainer w-100 col-xs-12 col-sm-12 excerpt">
+    <div class="searchResultsContainer mt-2 w-100 col-xs-12 col-sm-12 excerpt">
       {{#if searchResult}}
         {{#each searchResult}}
           <div class="srItem w-100">
