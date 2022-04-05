@@ -62,7 +62,8 @@ if (process.env.NODE_ENV === "production") {
   server.listen(httpRedirectPort);
 }
 //server.listen(port);
-console.log('listening on port ', port)
+console.log('https: listening on port ', port)
+console.log('http: listening on port ', httpRedirectPort)
 server.on('error', onError);
 server.on('listening', onListening);
 
