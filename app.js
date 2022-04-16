@@ -12,6 +12,7 @@ var searchRouter = require('./routes/search');
 var libRouter = require('./routes/lib');
 var browseRouter = require('./routes/browse');
 var resourcesRouter = require('./routes/resources');
+var redirectsRouter = require('./routes/redirects');
 var handlebars = require('handlebars')
 var helpers = require('handlebars-form-helpers').register(handlebars);
 var helmet = require('helmet');
@@ -50,6 +51,7 @@ app.use('/search', searchRouter);
 app.use('/lib', libRouter);
 app.use('/browse', browseRouter);
 app.use('/resources', resourcesRouter);
+app.use('/to', redirectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,7 +62,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get('env') === 'dev' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
