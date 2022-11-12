@@ -18,50 +18,8 @@ const fs = require('fs');
  var port = normalizePort(process.env.PORT || '443');
  var httpRedirectPort = normalizePort(process.env.PORT_HTTP || '80');
 
-if (process.env.NODE_ENV === "production") {
-  app.set('port', port);
-} else {
-  app.set('port', httpRedirectPort);
-}
-
-/**
- * Create HTTPS server.
- */
-
- if (process.env.NODE_ENV === "production") {
-  server = https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem'),
-  
-  }, app);
-  
-  
-  var httpsRedirect = http.createServer((req, res) => {
-    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
-    res.end();
-  });
-  
-  /**
-   * Create HTTP server to redirect all requests to HTTPS server.
-   */
-  
-  httpsRedirect.listen(httpRedirectPort);
-  httpsRedirect.on('error', onError);
-  httpsRedirect.on('listening', onListening);
-  
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
-} else {
-  server = http.createServer(app);
-};
-
-if (process.env.NODE_ENV === "production") {
-  server.listen(port);
-} else {
-  server.listen(httpRedirectPort);
-}
-//server.listen(port);
+server = http.createServer(app);
+server.listen(port);
 console.log('https: listening on port ', port)
 console.log('http: listening on port ', httpRedirectPort)
 server.on('error', onError);
@@ -126,4 +84,5 @@ function onListening() {
     : 'port ' + addr.port
   debug('Listening on ' + bind);
 }
+
 
