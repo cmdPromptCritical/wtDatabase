@@ -1,23 +1,5 @@
-/* Initializes a connection to elasticsearch. Settings changed for production,
-   but you get the picture. */
+//Initializes a connection to postgres db
 
-// var elasticsearch = require('elasticsearch');
-// var client = new elasticsearch.Client({
-//    hosts: [ '192.168.2.32:9200']
-// });
-// client.ping({
-//   requestTimeout: 15000,
-// }, function (error) {
-//   if (error) {
-//     console.error('elasticsearch cluster is down!');
-//   } else {
-//     console.log('ElasticSearch connected');
-//   }
-// });
-
-// module.exports = client;
-
-// new postgres-based connection
 const { Pool, Client } = require('pg')
 
 var pool = null;
@@ -25,10 +7,10 @@ var pool = null;
 try {
   pool = new Pool({
     user: 'wtdb',
-    host: 'db', //'192.168.2.11', //'74.14.8.225',
+    host: 'db', // change this to 'db' for docker, 'localhost' for standalone implementation
     database: 'wtdb',
     password: 'HgZwwYZZcC8vzr84',
-    port: 5432, //stock option was 3211
+    port: 5432, 
   });
 
   pool.query('SELECT NOW()', (err, res) => {
