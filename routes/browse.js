@@ -19,7 +19,7 @@ var getNavItems = (params, resQuery) => {
     whereCondition = " WHERE cat1 = '" + params.cat1 + "' AND cat2 = '" + params.cat2 +"'" + " AND cat3 = '" + params.cat3 +"'"
 
   } else if(params.cat2) {
-    titleColumn = 'cat3'
+	titleColumn = 'cat3'
     nextTitleColumn = 'cat4'
     whereCondition = " WHERE cat1 = '" + params.cat1 + "' AND cat2 = '" + params.cat2 +"'"
 
@@ -61,7 +61,12 @@ var getNavItems = (params, resQuery) => {
       } else {
         // saves search results to variable
         var searchHits = res.rows
-        console.log(res.rows[0].title)
+		console.log('breadcrumbs query:')
+		console.log(res.rows)
+		try { console.log(res.rows[0].title) } catch(err) { 
+			console.log('something went wrong with the breadcrumbs query res.rows[0].title: ')
+			console.log(err)
+		}
 
         // repackages variable from a messy object into a pretty list
         //var results = [];

@@ -37,7 +37,7 @@ var hbs = exphbs.create({
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', hbs.engine)
 app.set('view engine', '.hbs');
-app.use(logger('dev'));
+app.use(logger(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms :res[content-length]'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
