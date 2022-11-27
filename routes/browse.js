@@ -60,26 +60,12 @@ var getNavItems = (params, resQuery) => {
       } else {
         // saves search results to variable
         var searchHits = res.rows
-		//console.log('breadcrumbs query:')
-		//console.log(res.rows)
-		try { console.log('checking for errors in breadcrumbs query: ', res.rows[0]) } catch(err) { 
-			console.log('something went wrong with the breadcrumbs query res.rows[0]: ')
-			console.log(err)
-		}
-
-        // repackages variable from a messy object into a pretty list
-        //var results = [];
-        //searchHits.forEach(resultRow => {
-        //  results.push(resultRow.cat1)
-        //  results.push(resultRow.cat2)
-        //  results.push(resultRow.cat3)
-        //  results.push(resultRow.cat4)
-        //});
-
-        // removes empty rows caused by always grabbing cat1/cat2/cat3/cat4 rows
-        //var filterResults = results.filter((el) => {
-        //  return el != null
-        //});
+        //console.log('breadcrumbs query:')
+        //console.log(res.rows)
+        try { console.log('checking for errors in breadcrumbs query: ', res.rows[0]) } catch(err) { 
+          console.log('something went wrong with the breadcrumbs query res.rows[0]: ')
+          console.log(err)
+        }
         resolve(searchHits)
       }
     });
@@ -132,7 +118,6 @@ router.get('/0/:cat1?/:cat2?/:cat3?/:cat4?', function(req, res, next) {
   //var navItems = getNavItems(req.params)
   // - render the browseDrilldown menu
   initNavSearch(req.params, req.query, res)
-  //  res.render('browseDrilldown', {params: params, navItems: navItems, layout: 'browseDrilldown', title: 'Browsing :D'});
 });
 
 module.exports = router;
