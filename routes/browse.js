@@ -40,7 +40,6 @@ var getNavItems = (params, resQuery) => {
   }
 
   // compiles search query then executes
-  var queryStr = "SELECT DISTINCT " + titleColumn + " FROM wt_docs" + whereCondition + ";"
   var queryv2 = `
             SELECT ` + titleColumn + ` as title, max(pg) as pg, count(pg) as numDocs, max(length(` + nextTitleColumn + `)) as endofTree, 
             CASE
@@ -63,8 +62,8 @@ var getNavItems = (params, resQuery) => {
         var searchHits = res.rows
 		console.log('breadcrumbs query:')
 		console.log(res.rows)
-		try { console.log(res.rows[0].title) } catch(err) { 
-			console.log('something went wrong with the breadcrumbs query res.rows[0].title: ')
+		try { console.log('checking for errors in breadcrumbs query: ', res.rows[0]) } catch(err) { 
+			console.log('something went wrong with the breadcrumbs query res.rows[0]: ')
 			console.log(err)
 		}
 
@@ -94,7 +93,15 @@ var initNavSearch = function(params, reqQuery, res) {
     var navItems = messages[0];
     navItems = sortNavItems(navItems)
     let paramsforDisplay = {cat1: params.cat1, cat2: params.cat2, cat3: params.cat3, cat4: params.cat4}
-    renderNavResults(paramsforDisplay, navItems, res)
+    //working: let paramsforDisplay = {cat1: params.cat1, cat2: params.cat2, cat3: params.cat3, cat4: params.cat4}
+    //builds list of urls to send
+    let paramURLs = {
+      cat1: {name: params.cat1, url: '/browse/0/' + params.cat1},
+      cat2: {name: params.cat2, url: ''},
+      cat3: {name: params.cat3, url: ''},
+      cat4: {name: params.cat4, url: ''}
+    } 
+    renderNavResults(paramsforDisplay, paramURLs, navItems, res)
   })
     .catch((e) =>{
     console.log('something went sideways while querying db.');
@@ -102,18 +109,21 @@ var initNavSearch = function(params, reqQuery, res) {
 }
 
 // takes navItems object, sorts them based off of context
+// currently doesn't sort
 function sortNavItems(navItems) {
   return navItems
 }
 // currently being added
-var renderNavResults = (params, navItems, res) => {
+// params = breadcrumb items
+// navItems = list from querying the db of documents at a certain depth
+var renderNavResults = (params, paramURLs, navItems, res) => {
   console.log('sent to webpage, params: ', params)
   console.log('sent to webpage, navItems: ', navItems)
-  res.render('browseDrilldown', {params: params, navItems: navItems, layout: 'browseDrilldown', title: 'Browsing :D'});
+  res.render('browseDrilldown', {params: params, navItems: navItems, paramURLs: paramURLs, layout: 'browseDrilldown', title: 'Browsing :D'});
 }
 
 router.get('/', function(req, res, next) {
-    res.render('browse', { title: 'Browse' });
+    res.render('browse', { title: 'Browse Library' });
 });
 
 router.get('/0/:cat1?/:cat2?/:cat3?/:cat4?', function(req, res, next) {

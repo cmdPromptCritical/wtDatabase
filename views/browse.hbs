@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="col-12 col-md-10 col-lg-8 col-xl-8" id='body'><h1>{{title}}</h1>
+  <div class="col-12 col-md-10 col-lg-8 col-xl-8" id='body'><h2>{{title}}</h2>
     <div class="row">
       <div id="browseContainer" class="col-12">
       </div>
@@ -32,6 +32,7 @@
     }
     xhr.onload = function() {
         if (xhr.status === 200) {
+            console.log('updating innnerhtml')
             logElem.innerHTML = xhr.response;
             addUrlstoNavItems(params, paramsInUrl);
         }
@@ -69,32 +70,33 @@
     // If the clicked element doesn't have the right selector, bail
     if (!event.target.matches('.browseNavItem')) return;
 
-      // Log the clicked element in the console
-      console.log(event.target.getAttribute('q'));
-      console.log(event.target.getAttribute('cat1'));
+    // Log the clicked element in the console
+    console.log(event.target.getAttribute('q'));
+    console.log(event.target.getAttribute('cat1'));
 
-      // grabs parameters, adds row title to one of them based on what params are fed
-      var params;
-      params = {cat1: event.target.getAttribute('cat1'), 
-                cat2: event.target.getAttribute('cat2'), 
-                cat3: event.target.getAttribute('cat3'), 
-                cat4: event.target.getAttribute('cat4'),
-                endoftree: event.target.getAttribute('endoftree'),
-                pg: event.target.getAttribute('pg')}
-      console.log('params, initDefinition: ', params)
-      if(!params.cat1) {
-        console.log(!params.cat1, 'params.cat1: ' + params.cat1)
-        params.cat1 = event.target.getAttribute('q');
-      } else if (!params.cat2) {
-        params.cat2 = event.target.getAttribute('q');
-      } else if (!params.cat3) {
-        params.cat3 = event.target.getAttribute('q');
-      } else if (!params.cat4) {
-        params.cat4 = event.target.getAttribute('q');
-      }
-      console.log('params: ', params)
-      // since nav item was clicked, start a get req for the next menu
-      initNavigation(params)
+    // grabs parameters, adds row title to one of them based on what params are fed
+    var params;
+    params = {cat1: event.target.getAttribute('cat1'), 
+              cat2: event.target.getAttribute('cat2'), 
+              cat3: event.target.getAttribute('cat3'), 
+              cat4: event.target.getAttribute('cat4'),
+              endoftree: event.target.getAttribute('endoftree'),
+              pg: event.target.getAttribute('pg'),
+              reqFromBreadcrumbs: event.target.getAttribute('breadcrumbs')}
+    console.log('params, initDefinition: ', params)
+    if(!params.cat1 && !params.reqFromBreadcrumbs) {
+      console.log(!params.cat1, 'params.cat1: ' + params.cat1)
+      params.cat1 = event.target.getAttribute('q');
+    } else if (!params.cat2 && !params.reqFromBreadcrumbs) {
+      params.cat2 = event.target.getAttribute('q');
+    } else if (!params.cat3 && !params.reqFromBreadcrumbs) {
+      params.cat3 = event.target.getAttribute('q');
+    } else if (!params.cat4 && !params.reqFromBreadcrumbs) {
+      params.cat4 = event.target.getAttribute('q');
+    }
+    console.log('params: ', params)
+    // since nav item was clicked, start a get req for the next menu
+    initNavigation(params)
 
   }, false);
 

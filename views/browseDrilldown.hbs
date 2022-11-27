@@ -1,16 +1,29 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
 
-<h3>Breadcrumbs:</h3>
-<li>{{params.cat1}}</li>
-<li>{{params.cat2}}</li>
-<li>{{params.cat3}}</li>
-<li>{{params.cat4}}</li>
+    {{#if params.cat4}}
+    <li class="breadcrumb-item"> <a href="#" q="{{params.cat1}}" breadcrumbs='1' endofTree='3' cat1="{{params.cat1}}" cat2="" cat3="" cat4="" pg="2" class="browseNavItem">{{params.cat1}}</a></li>
+    <li class="breadcrumb-item"> <a href="#" q="{{params.cat2}}" breadcrumbs='1' endofTree='3' cat1="{{params.cat1}}" cat2="{{params.cat2}}" cat3="" cat4="" pg="2" class="browseNavItem">{{params.cat2}}</a></li>
+    <li class="breadcrumb-item"> <a href="#" q="{{params.cat3}}" breadcrumbs='1' endofTree='3' cat1="{{params.cat1}}" cat2="{{params.cat2}}" cat3="{{params.cat3}}" cat4="" pg="2" class="browseNavItem">{{params.cat3}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page"> {{params.cat4}}</li>
+    {{else if params.cat3}}
+    <li class="breadcrumb-item"> <a href="#" q="{{params.cat1}}" breadcrumbs='1' endofTree='3' cat1="{{params.cat1}}" cat2="" cat3="" cat4="" pg="2" class="browseNavItem">{{params.cat1}}</a></li>
+    <li class="breadcrumb-item"> <a href="#" q="{{params.cat2}}" breadcrumbs='1' endofTree='3' cat1="{{params.cat1}}" cat2="{{params.cat2}}" cat3="" cat4="" pg="2" class="browseNavItem">{{params.cat2}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page"> {{params.cat3}}</li>
+    {{else if params.cat2}}
+    <li class="breadcrumb-item"> <a href="#" q="{{params.cat1}}" breadcrumbs='1' endofTree='3' cat1="{{params.cat1}}" cat2="" cat3="" cat4="" pg="2" class="browseNavItem">{{params.cat1}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page"> {{params.cat2}}</li>
+    {{else if params.cat1}}
+    <li class="breadcrumb-item active" aria-current="page"> {{params.cat1}}</li>
+    {{else}}
+    
+    {{/if}}
+  </ol>
+</nav>
 {{#if navItems}}
-    <h3>navItems:</h3>
     <ul class="list-group">
     {{#each navItems}}
-        <script>
-          console.log('{{navItems}}')
-        </script>
+
         <a href="#" q="{{this.title}}" cat1="{{../params.cat1}}" cat2="{{../params.cat2}}" cat3="{{../params.cat3}}" cat4="{{../params.cat4}}" pg="{{this.pg}}" numdocs="{{this.numdocs}}" endofTree="{{this.endoftree}}" class="browseNavItem list-group-item list-group-item-action list-group-item-action">{{this.title}}</a>
     {{/each}}
     </ul>
