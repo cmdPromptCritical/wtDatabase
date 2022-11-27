@@ -17,7 +17,8 @@ const fs = require('fs');
 
  var port = normalizePort(process.env.PORT || '443');
 
-server = http.createServer(app);
+server = http.createServer(
+  {}, app);
 server.listen(port);
 console.log('https: listening on port ', port)
 server.on('error', onError);

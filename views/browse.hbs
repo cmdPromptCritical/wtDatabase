@@ -1,5 +1,5 @@
-<div class="wrapper">
-  <div class="col-12 col-md-10 col-lg-8 col-xl-8" id='body'><h1>{{title}}</h1>
+<div class="container">
+  <div class="mt-1 col-12 col-md-10 col-lg-8 col-xl-8" id='body'><h2>{{title}}</h2>
     <div class="row">
       <div id="browseContainer" class="col-12">
       </div>
@@ -28,10 +28,11 @@
       // adds extra parameter if params has an 'endoftree' property and it == null, indicates impending end of tree
       if(params.hasOwnProperty('endoftree') && params.endoftree == "") {paramsInUrl += '?endoftree=T'}
       xhr.open('GET', '/browse/0' + paramsInUrl)
-      console.log('params sent to server: ', '/browse/0' + paramsInUrl)
+      //console.log('params sent to server: ', '/browse/0' + paramsInUrl)
     }
     xhr.onload = function() {
         if (xhr.status === 200) {
+            console.log('updating innnerhtml')
             logElem.innerHTML = xhr.response;
             addUrlstoNavItems(params, paramsInUrl);
         }
@@ -69,62 +70,34 @@
     // If the clicked element doesn't have the right selector, bail
     if (!event.target.matches('.browseNavItem')) return;
 
-      // Log the clicked element in the console
-      console.log(event.target.getAttribute('q'));
-      console.log(event.target.getAttribute('cat1'));
+    // Log the clicked element in the console
+    console.log(event.target.getAttribute('q'));
+    console.log(event.target.getAttribute('cat1'));
 
-      // grabs parameters, adds row title to one of them based on what params are fed
-      var params;
-      params = {cat1: event.target.getAttribute('cat1'), 
-                cat2: event.target.getAttribute('cat2'), 
-                cat3: event.target.getAttribute('cat3'), 
-                cat4: event.target.getAttribute('cat4'),
-                endoftree: event.target.getAttribute('endoftree'),
-                pg: event.target.getAttribute('pg')}
-      console.log('params, initDefinition: ', params)
-      if(!params.cat1) {
-        console.log(!params.cat1, 'params.cat1: ' + params.cat1)
-        params.cat1 = event.target.getAttribute('q');
-      } else if (!params.cat2) {
-        params.cat2 = event.target.getAttribute('q');
-      } else if (!params.cat3) {
-        params.cat3 = event.target.getAttribute('q');
-      } else if (!params.cat4) {
-        params.cat4 = event.target.getAttribute('q');
-      }
-      console.log('params: ', params)
-      // since nav item was clicked, start a get req for the next menu
-      initNavigation(params)
+    // grabs parameters, adds row title to one of them based on what params are fed
+    var params;
+    params = {cat1: event.target.getAttribute('cat1'), 
+              cat2: event.target.getAttribute('cat2'), 
+              cat3: event.target.getAttribute('cat3'), 
+              cat4: event.target.getAttribute('cat4'),
+              endoftree: event.target.getAttribute('endoftree'),
+              pg: event.target.getAttribute('pg'),
+              reqFromBreadcrumbs: event.target.getAttribute('breadcrumbs')}
+    console.log('params, initDefinition: ', params)
+    if(!params.cat1 && !params.reqFromBreadcrumbs) {
+      params.cat1 = event.target.getAttribute('q');
+    } else if (!params.cat2 && !params.reqFromBreadcrumbs) {
+      params.cat2 = event.target.getAttribute('q');
+    } else if (!params.cat3 && !params.reqFromBreadcrumbs) {
+      params.cat3 = event.target.getAttribute('q');
+    } else if (!params.cat4 && !params.reqFromBreadcrumbs) {
+      params.cat4 = event.target.getAttribute('q');
+    }
+    console.log('params: ', params)
+    // since nav item was clicked, start a get req for the next menu
+    initNavigation(params)
 
   }, false);
 
-  // Create an observer instance linked to the callback function
-  //const observer = new MutationObserver(addUrlstoNavItems);
-  //var target = document.getElementById("browseContainer")
-  //const config = {attributes: true, childList: true, subtree: true}
-  //observer.observe(target, config);
 
 </script>
-
-<!-- old card style, goes under wrapper > body > row:
-      <div class="col-sm-6">
-        <div class="card cat1-pubs">
-          <img class='card-img-top' src='/images/watchtower-coverpage.jpg' alt='Watchtower Magazines'>
-          <div class="card-body">
-            <h5 class="card-title">Watchtower Magazine</h5>
-            <p class="card-text">Spanning from 1886 to 2019, this is the most extensive series of Watchtower publications.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-    </div>
- -->
