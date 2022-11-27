@@ -28,7 +28,7 @@
       // adds extra parameter if params has an 'endoftree' property and it == null, indicates impending end of tree
       if(params.hasOwnProperty('endoftree') && params.endoftree == "") {paramsInUrl += '?endoftree=T'}
       xhr.open('GET', '/browse/0' + paramsInUrl)
-      console.log('params sent to server: ', '/browse/0' + paramsInUrl)
+      //console.log('params sent to server: ', '/browse/0' + paramsInUrl)
     }
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -85,7 +85,6 @@
               reqFromBreadcrumbs: event.target.getAttribute('breadcrumbs')}
     console.log('params, initDefinition: ', params)
     if(!params.cat1 && !params.reqFromBreadcrumbs) {
-      console.log(!params.cat1, 'params.cat1: ' + params.cat1)
       params.cat1 = event.target.getAttribute('q');
     } else if (!params.cat2 && !params.reqFromBreadcrumbs) {
       params.cat2 = event.target.getAttribute('q');

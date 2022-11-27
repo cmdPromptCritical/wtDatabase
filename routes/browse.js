@@ -49,7 +49,7 @@ var getNavItems = (params, resQuery) => {
             FROM wt_docs` + whereCondition + " GROUP BY " + titleColumn + " ORDER BY title;"
 
   // aaaand one last addition: see if endoftree == T so it can pull pg#'s for titles
-  console.log('search query: ', queryv2);
+  //console.log('search query: ', queryv2);
   return new Promise((resolve, reject) => {
     db.query(queryv2, (err, res) => {
       if (err) {
@@ -60,8 +60,8 @@ var getNavItems = (params, resQuery) => {
       } else {
         // saves search results to variable
         var searchHits = res.rows
-		console.log('breadcrumbs query:')
-		console.log(res.rows)
+		//console.log('breadcrumbs query:')
+		//console.log(res.rows)
 		try { console.log('checking for errors in breadcrumbs query: ', res.rows[0]) } catch(err) { 
 			console.log('something went wrong with the breadcrumbs query res.rows[0]: ')
 			console.log(err)
@@ -117,8 +117,8 @@ function sortNavItems(navItems) {
 // params = breadcrumb items
 // navItems = list from querying the db of documents at a certain depth
 var renderNavResults = (params, paramURLs, navItems, res) => {
-  console.log('sent to webpage, params: ', params)
-  console.log('sent to webpage, navItems: ', navItems)
+  //console.log('sent to webpage, params: ', params)
+  //console.log('sent to webpage, navItems: ', navItems)
   res.render('browseDrilldown', {params: params, navItems: navItems, paramURLs: paramURLs, layout: 'browseDrilldown', title: 'Browsing :D'});
 }
 
@@ -131,7 +131,6 @@ router.get('/0/:cat1?/:cat2?/:cat3?/:cat4?', function(req, res, next) {
   // - query the db for a list of entries
   //var navItems = getNavItems(req.params)
   // - render the browseDrilldown menu
-  console.log('aslfalskfjasjsdlfkj', req.query.endoftree)
   initNavSearch(req.params, req.query, res)
   //  res.render('browseDrilldown', {params: params, navItems: navItems, layout: 'browseDrilldown', title: 'Browsing :D'});
 });
