@@ -1,16 +1,8 @@
-Requirements:
--postgres
--nodejs
-```bash
-# install
-sudo apt install nodejs postgresql postgresql-contrib
+# How to Use
+- Download, run npm install
+-- npm install -g pm2 may need to be run
+- run bin/www2
+- go to http://localhost:3000
 
-# configure postgres
-# create db
-sudo -u postgres createdb wtdb
-
-# create user
-sudo -u postgres createuser wtdb
-sudo -u postgres psql
-sudo -u postgres psql -c "alter user wtdb with encrypted password 'dbuserpassword';"
-```
+# Self Notes
+- how to setup docker-compose: https://github.com/evgeniy-khist/letsencrypt-docker-compose
