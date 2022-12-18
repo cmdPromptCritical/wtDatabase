@@ -9,6 +9,10 @@ WORKDIR /usr/share/wtdb
 COPY package*.json ./
 
 RUN npm install
+
+#install pm2
+RUN npm install pm2 --save
+
 # if in production, use instead:
 # RUN npm ci --only=production
 
