@@ -39,10 +39,19 @@ function genPgNums(pgNum, pgLimit = 10){
 };
 var aqueryTxt = (query, res, pgNum = 1) => {
   console.log('starting query...');
+  
+  //ensures pgNum is not NaN and is > 0
+  if (isNaN(Number(pgNum))) {
+    pgNum = 0;
+  }
+  pgNum = Number(pgNum)
+  if (pgNum == 0) {pgNum = 1}
+
   let offset = (pgNum-1) * 20;
-  console.log('search offset: ' + offset)
+
   let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20 OFFSET " + offset + ") as foo;" // don't use this for querying db!!!
   return new Promise((resolve, reject) => {
+    console.log(pgNum)
     db.query("SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery($1) q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20 OFFSET " + offset + ") as foo;", [query], (err, res) => {
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
