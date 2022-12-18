@@ -23,7 +23,8 @@ app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", 'code.jquery.com', "'unsafe-inline'", 'cdnjs.cloudflare.com','cdn.jsdelivr.net'],
     styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'cdn.jsdelivr.net'],
-    fontSrc: ["'self'", 'fonts.googleapis.com', 'fonts.gstatic.com']
+    fontSrc: ["'self'", 'fonts.googleapis.com', 'fonts.gstatic.com'],
+    objectSrc: ["'self'","'unsafe-inline'"]
   }
  }));
 

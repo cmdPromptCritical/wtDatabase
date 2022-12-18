@@ -50,9 +50,11 @@ var aqueryTxt = (query, res, pgNum = 1) => {
   let offset = (pgNum-1) * 20;
 
   let queryStr = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery('" + query + "') q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20 OFFSET " + offset + ") as foo;" // don't use this for querying db!!!
+  // pg uses $1, $2, etc for parameterized queries. parameters are provided in an array (e.g. db.query(searchstr, ['search', offset]))
+  let safeQuery = "SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery($1) q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20 OFFSET $2) as foo;"
   return new Promise((resolve, reject) => {
     console.log(pgNum)
-    db.query("SELECT rnk, cat1, cat2, cat3, cat4, pg, ts_headline(bodytxt, q, 'StartSel=<mark>, StopSel=</mark>, MaxFragments=3, MaxWords=20') as excerpt from (select ts_rank_cd(searchtext, q) as rnk, cat1, cat2, cat3, cat4, pg, bodytxt, q from wt_docs, plainto_tsquery($1) q WHERE searchtext @@ q ORDER BY rnk desc LIMIT 20 OFFSET " + offset + ") as foo;", [query], (err, res) => {
+    db.query(safeQuery, [query, offset], (err, res) => {
       if (err) {
         console.log('no search results, or something went wrong when searching through the db')
         console.log('error: ', err)
