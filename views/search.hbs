@@ -104,6 +104,7 @@
 
 
     <div class="searchResultsContainer mt-2 w-100 col-xs-12 col-sm-12 excerpt">
+    <!-- search results: -->
       {{#if searchResult}}
         {{#each searchResult}}
           <div class="srItem w-100">
@@ -117,15 +118,18 @@
         </div>
       {{/if}}
     </div>
+
+    <!-- begin pagination -->
     {{#if searchResult}}
       <ul class="pagination">
-        <li class="page-item"><a class="page-link" id="pgPrev" href="&p={{pagination.pgPrev}}">Previous</a></li>
+        <li class="page-item"><a class="page-link" id="pgPrev" href="/search?q=test&p={{pagination.pgPrev}}">Previous</a></li>
         {{#each pagination.pgArr}}
-        <li class="page-item" id="pg{{this}}"><a class="page-link" href="&p={{this}}">{{this}}</a></li>
+        <li class="page-item" id="pg{{this}}"><a class="page-link" href="/search?q=test&p={{this}}">{{this}}</a></li>
         {{/each}}
-        <li class="page-item"><a class="page-link" id="pgNext" href="&p={{pagination.pgNext}}">Next</a></li>
+        <li class="page-item"><a class="page-link" id="pgNext" href="/search?q=test?p={{pagination.pgNext}}">Next</a></li>
       </ul>
     {{/if}}
+    <!-- end pagination -->
 
     <script>
       // ### pagination of search results
@@ -141,7 +145,7 @@
           // Do stuff here
           var tempstr = el.href 
           //console.log('before:', el.href);
-          tempstr = tempstr.replace(/3000\//gi,'3000/search?q=' + query)
+          tempstr = tempstr.replace('/search?q=test','/search?q=' + query)
           //console.log('query: ', query);
           el.href = tempstr
           //console.log('after: ', el.href);
