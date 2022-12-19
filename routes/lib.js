@@ -65,11 +65,11 @@ function getDoc(query, reqQuery, res, params = undefined) {
   })
   searchdb.then(() => {
     res.render('lib', { 
-      title: query , 
+      title: queryRes[0].cat1 +' '+ queryRes[0].cat2 +': '+ queryRes[0].cat3 +' '+ queryRes[0].cat4  , 
       searchResult: queryRes,
       urlSettings: docType
     });
-    console.log('ho', queryRes)
+    console.log('ho', queryRes[0])
   
   }).catch( (err) => {
     res.render('lib', { title: 'Error for "' + query + '"'});
